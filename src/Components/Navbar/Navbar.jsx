@@ -1,17 +1,31 @@
 import React, { use } from 'react';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import carLogo from "../../assets/car logo.jpg"
 import { AuthContext } from '../../Contexts/AuthContext';
+import Swal from 'sweetalert2';
+import { Tooltip } from 'react-tooltip';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
-    const {} = use(AuthContext);
+    const {user, logOutUer} = use(AuthContext);
+    const navigate = useNavigate();
     const navList = <>
                 <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
                 <li className='text-lg'><NavLink to='/find_roommate' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
             </>
+    const handleLogOut = () =>{
+        logOutUer()
+        .then(()=>{
+            Swal.fire({icon:"success", title:"Logged Out"});
+            navigate("/login");
+        })
+        .catch(error =>{
+            Swal.fire({icon:"error", title:`${error.message}`});
+        })
+    }
     return (
-    <div className='bg-base-200'>
-            <div className="navbar w-full sm:w-11/12 mx-auto pr-4 sm:px-0">
+    <div className='bg-base-200 sticky top-0'>
+            <div className="navbar justify-center items-center w-full sm:w-11/12 mx-auto pr-4 sm:px-0 py-0">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -37,12 +51,30 @@ const Navbar = () => {
                         {navList}
                     </ul>
                 </div>
-                <div className="navbar-end">
-                    <div className="flex items-center gap-0.5">
-                        <div className='flex'>
-                            <Link to='/login' className="btn btn-outline mr-1 text-xs md:text-base p-1 sm:p-2 text-blue-600 hover:text-red-600">Log In</Link>
+                <div className="navbar-end h-10">
+                    <div className="flex items-center gap-1">
+                        {
+                            user?
+                            <div>
+                                <a data-tooltip-id="my-tooltip" data-tooltip-content={user?.displayName} className='w-12 p-0.5 rounded-full'>
+                                    <img className='rounded-full w-12' src={user?.photoURL}></img>
+                                </a>
+                                <Tooltip id="my-tooltip" />
+                            </div>
+                            :
+                            <div className='cursor-pointer' onClick={()=>navigate('/auth/login')}>
+                                <FaUserCircle  size={35}></FaUserCircle>
+                            </div>
+                        } 
+                   
                         
-                        </div>
+                            {
+                                user?
+                                <button onClick={handleLogOut} className="btn btn-outline mr-1 text-xs md:text-base p-1 sm:p-2 text-blue-600 hover:text-red-600">Log Out</button>
+                                :
+                                <Link to='/login' className="btn btn-outline mr-1 text-xs md:text-base p-1 sm:p-2 text-blue-600 hover:text-red-600">Log In</Link>
+                            }
+                  
                     </div>
                 </div>
             </div>

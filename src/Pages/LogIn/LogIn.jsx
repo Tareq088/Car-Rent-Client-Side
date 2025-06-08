@@ -1,12 +1,16 @@
-import React, { use, useState } from 'react';
+import React, { use, useRef, useState } from 'react';
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../Contexts/AuthContext';
 import Swal from 'sweetalert2';
 
 const LogIn = () => {
     const[showPassword, setShowPassword] = useState(false);
-    const{logInUser, googleSignInUser} = use(AuthContext);
+    const{logInUser, googleSignInUser, resetPassword} = use(AuthContext);
+    const emailRef = useRef("");
+    const navigate = useNavigate();
+    const location = useLocation();
+                        // login
     const handleLogIn =(e) =>{
         e.preventDefault();
         const form = e.target;
@@ -16,7 +20,7 @@ const LogIn = () => {
                         //log in user
         logInUser(email, password)
         .then(result=>{
-            console.log(result.user);
+            // console.log(result.user);
               Swal.fire({
                         position: "top-end",
                         icon: "success",
@@ -24,16 +28,25 @@ const LogIn = () => {
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    navigate(location.state || "/home")
         })
         .catch(error =>{
-            console.log(error.message);
-            Swal.fire(`${error.message}`)
+            // console.log(error.message.split("/")[1].split(")")[0]);
+            if(error.message.split("/")[1].split(")")[0] == "missing-password"){
+                Swal.fire({icon:"error", title:"Fill Up the Password Field"});
+            }
+            else if(error.message.split("/")[1].split(")")[0] == "invalid-credential"){
+                 Swal.fire({icon:"error", title:"Incorrect Password. Please try again.."});
+            }
+            else{
+                Swal.fire({icon:"error", title:`${error.message.split("/")[1].split(")")[0]}`});
+            }
         })
     }
     const handleGoogleSignIn = () =>{
         googleSignInUser()
         .then(result =>{
-            console.log(result.user);
+            // console.log(result.user);
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -41,13 +54,22 @@ const LogIn = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
+            navigate(location.state || "/home")
         })
         .catch(error =>{
-            Swal.fire(`${error.message}`)
+            Swal.fire({icon:"error", title:`${error.message}`});
         })
     }
     const handleForgetPassword =() =>{
-        console.log("forget")
+        const email = emailRef.current.value;
+        resetPassword(email)
+        .then(()=>{
+            Swal.fire(`Password Reset Mail is sent to  Email: ${email}`);
+        })
+        .catch(error=>{
+            Swal.fire(`${error.message}`);
+        })
+        
     }
     return (
         <div>
@@ -60,7 +82,7 @@ const LogIn = () => {
                     <fieldset className="fieldset">
                                     {/* email */}
                         <label className="label">Email</label>
-                        <input type="email" name='email' className="input" placeholder="Email"/>
+                        <input ref={emailRef} type="email" name='email' className="input" placeholder="Email"/>
                                   
                                     {/* password */}
                         <label className="label">Password</label>
