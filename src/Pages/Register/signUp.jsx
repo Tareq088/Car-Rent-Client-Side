@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import { Link } from 'react-router';
+import { AuthContext } from '../../Contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
      const[showPassword, setShowPassword] = useState(false);
+     const {signUpUser} = use(AuthContext);
     const handleSignUp = (e) =>{
         e.preventDefault();
-        console.log("sign")
+        const form = e.target;;
+        const formData = new FormData(form);
+        const userData = Object.fromEntries(formData.entries());
+        // console.log(userData);
+        const {name, email, photo,password} = userData;
+                    // create user
+        signUpUser(email, password)
+        .then(result =>{
+            console.log(result.user);
+            toast.success("user is created successfully.")
+        })
+        .catch(error =>{
+            console.log(error.message)
+        })
     }
     return (
     <div>
