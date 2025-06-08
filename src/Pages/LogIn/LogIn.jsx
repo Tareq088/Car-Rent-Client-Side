@@ -35,9 +35,9 @@ const LogIn = () => {
                                     setShowPassword(!showPassword)
                                     }} className="btn join-item">
                                 {showPassword ?
-                                <IoIosEye/>
-                                :
                                 <IoIosEyeOff/>
+                                :
+                                <IoIosEye/>
                                 }
                             </button>
                         </div>
@@ -57,7 +57,7 @@ const LogIn = () => {
                 Login with Google
                 </button>
                 <p className='text-center'>Have No Account? 
-                    <span className='font-bold text-red-600 hover:text-green-800 hover:underline'><Link to='/auth/signup'> Register Now</Link></span>
+                    <span className='font-bold text-red-600 hover:text-green-800 hover:underline'><Link to='/signup'> Register Now</Link></span>
                 </p>
             </div>
         </div>
