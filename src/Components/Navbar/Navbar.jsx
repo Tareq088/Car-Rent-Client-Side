@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Link, NavLink } from 'react-router';
 import carLogo from "../../assets/car logo.jpg"
+import { AuthContext } from '../../Contexts/AuthContext';
 
 const Navbar = () => {
+    const {} = use(AuthContext)
     const navList = <>
                 <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
-                <li className='text-lg'><NavLink to='/find_roommate' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Add toFind Roommate</NavLink></li>
-                <li className='text-lg'><NavLink to='/browse_listing' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Browse Listing</NavLink></li>
-                <li className='text-lg'><NavLink to='/my_listing' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>My Listing</NavLink></li>
+                <li className='text-lg'><NavLink to='/find_roommate' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
             </>
     return (
     <div className=''>
@@ -27,6 +27,7 @@ const Navbar = () => {
                     <img className='hidden sm:block sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full' src={carLogo}></img>
                     <div className="text-xs md:text-base lg:text-xl text-red-800">
                         <Link to='/' >Find Car</Link>
+                       
                     </div>
                    
                     </div>
