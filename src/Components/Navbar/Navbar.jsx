@@ -4,13 +4,13 @@ import carLogo from "../../assets/car logo.jpg"
 import { AuthContext } from '../../Contexts/AuthContext';
 
 const Navbar = () => {
-    const {} = use(AuthContext)
+    const {} = use(AuthContext);
     const navList = <>
                 <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
                 <li className='text-lg'><NavLink to='/find_roommate' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
             </>
     return (
-    <div className=''>
+    <div className='bg-base-200'>
             <div className="navbar w-full sm:w-11/12 mx-auto pr-4 sm:px-0">
                 <div className="navbar-start">
                     <div className="dropdown">

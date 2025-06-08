@@ -1,12 +1,18 @@
 import React, { use, useState } from 'react';
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../Contexts/AuthContext';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
-     const[showPassword, setShowPassword] = useState(false);
-     const {signUpUser} = use(AuthContext);
+    const[showPassword, setShowPassword] = useState(false);
+    const[errorMessage,setErrorMessage] = useState(" ");
+    const {signUpUser, updateUserProfile, setUser} = use(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    // console.log(location);
+
     const handleSignUp = (e) =>{
         e.preventDefault();
         const form = e.target;;
@@ -14,14 +20,35 @@ const SignUp = () => {
         const userData = Object.fromEntries(formData.entries());
         // console.log(userData);
         const {name, email, photo,password} = userData;
+                        // reset errorMessage 
+        setErrorMessage("");
+                    // error,  password validation
+        const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]){8,}/; 
+        if(!passwordRegExp.test(password)){
+            setErrorMessage("Password must have 8 characters including 1 small, 1 capital, 1 special character");
+            return;
+        }
                     // create user
         signUpUser(email, password)
         .then(result =>{
             console.log(result.user);
-            toast.success("user is created successfully.")
+            const profile = {
+                displayName: name,
+                photoURL: photo,
+            };
+            updateUserProfile(profile)
+            .then(()=>{
+                setUser({...result.user,...profile});
+                toast.success("user is created successfully.");
+                navigate(location.state || "/home")
+            })
+            .catch(error=>{
+                console.log(error.message);
+                Swal.fire(`${error.message}`)
+            })
         })
         .catch(error =>{
-            console.log(error.message)
+            console.log(error.message);
         })
     }
     return (
@@ -35,18 +62,18 @@ const SignUp = () => {
                     <fieldset className="fieldset">
                                 {/* name */}
                         <label className="label">Name</label>
-                        <input type="text" name='name' className="input" placeholder="Name"/>
+                        <input type="text" name='name' className="input" placeholder="Name" required/>
                                     {/* email */}
                         <label className="label">Email</label>
-                        <input type="email" name='email' className="input" placeholder="Email"/>
+                        <input type="email" name='email' className="input" placeholder="Email" required/>
                                     {/* photoURL */}
                     
                         <label className="label">photoURL</label>
-                        <input type="text" name='photo' className="input" placeholder="photoURL"/>
+                        <input type="url" name='photo' className="input" placeholder="https://examle.com" required/>
                                     {/* password */}
                         <label className="label">Password</label> 
                         <div className="join">
-                            <input type={showPassword?"text" :"password"} name='password' className="input join-item" placeholder="Password"/>
+                            <input type={showPassword?"text" :"password"} name='password' className="input join-item" placeholder="Password" required/>
                             <button 
                                 onClick={()=>{
                                     setShowPassword(!showPassword)
@@ -58,11 +85,11 @@ const SignUp = () => {
                                 }
                             </button>
                         </div>
-                        {/* {
+                        {
                             errorMessage && <p className='text-xs text-red-700'>{errorMessage}</p>
-                        } */}
-                        <div><a className="link link-hover">Forgot password?</a></div>
-                        <button type='submit' to='/auth/login' className="btn btn-success mt-4">Register</button>
+                        }
+                        
+                        <button type='submit' to='/home' className="btn btn-success mt-4">Register</button>
                     </fieldset>
                 </form>
                 <p className='text-center'>Already Have an Account? 

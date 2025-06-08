@@ -1,14 +1,50 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import { Link } from 'react-router';
+import { AuthContext } from '../../Contexts/AuthContext';
+import Swal from 'sweetalert2';
 
 const LogIn = () => {
     const[showPassword, setShowPassword] = useState(false);
+    const{logInUser, googleSignInUser} = use(AuthContext);
     const handleLogIn =(e) =>{
         e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+                        //log in user
+        logInUser(email, password)
+        .then(result=>{
+            console.log(result.user);
+              Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Logged In Successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+        })
+        .catch(error =>{
+            console.log(error.message);
+            Swal.fire(`${error.message}`)
+        })
     }
     const handleGoogleSignIn = () =>{
-        console.log("google")
+        googleSignInUser()
+        .then(result =>{
+            console.log(result.user);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Logged In Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        })
+        .catch(error =>{
+            Swal.fire(`${error.message}`)
+        })
     }
     const handleForgetPassword =() =>{
         console.log("forget")
