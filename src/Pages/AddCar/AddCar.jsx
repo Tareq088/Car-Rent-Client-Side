@@ -13,9 +13,9 @@ const AddCar = () => {
         const formData = new FormData(form);
         const  carData = Object.fromEntries(formData.entries());
                             //features in array
-         carData.features =   carData.features.split(",").map(req=> req.trim(" "));
+         carData.features = carData.features.split(",").map(req=> req.trim(" "));
                             // description in array
-         carData.description =   carData.description.split(",").map(req=> req.trim(" "));
+         carData.description = carData.description.split(",").map(req=> req.trim(" "));
          carData.add_Time= format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss");
         console.log( carData);
         const {Daily_Rent, User_name, availability, booking_Count, contact_info, description, email, 
@@ -59,16 +59,19 @@ const AddCar = () => {
                     <input type="text" name='registration_no' className="input w-full" placeholder="Dhaka-Metro-Kha-15-1229"/>
                                 {/* Features */}
                     <label className="label">Features</label>
-                    <textarea name="features" cols={5} rows={10} className="input w-full"  ></textarea>
+                    <textarea name="features" cols={5} rows={10} className="input w-full"  placeholder='Enter the features'></textarea>
                                 {/* Description */}
                     <label className="label"> Description </label>
-                    <textarea name="description" cols={5} rows={10} className="input w-full"  ></textarea>
+                    <textarea name="description" cols={5} rows={10} className="input w-full"  placeholder='Write the description'></textarea>
                                 {/* Booking count */}
                     <label className="label"> Booking count </label>
                     <input type='number' defaultValue="0" name="booking_Count" className="input w-full" placeholder='Booking Count(Default Count = 0)'></input>
                                 {/* Image URL */}
                     <label className="label"> Image URL </label>
                     <input type='url' name="photo"  className="input w-full" placeholder='https://example.com'></input>
+                                {/* Location */}
+                    <label className="label"> Location </label>
+                    <input type='url' name="location"  className="input w-full" placeholder='Location'></input>
                              
                                         {/* contact info */}
                     <label className="label">Contact Info</label>

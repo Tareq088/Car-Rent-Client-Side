@@ -14,7 +14,11 @@ const Navbar = () => {
                 <li className='text-lg'><NavLink to='/available-cars' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
                 {
                     user &&
-                    <li className='text-lg'><NavLink to='/add-car' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Add Car</NavLink></li>
+                    <>
+                        <li className='text-lg'><NavLink to='/add-car' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Add Car</NavLink></li>
+                        <li className='text-lg'><NavLink to='/my-cars' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>My Cars</NavLink></li>
+                        <li className='text-lg'><NavLink to='/my-bookings' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>My Bookings</NavLink></li>
+                    </>
                 }
             </>
     const handleLogOut = () =>{

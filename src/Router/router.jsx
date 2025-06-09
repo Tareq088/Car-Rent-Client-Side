@@ -6,6 +6,11 @@ import SignUp from "../Pages/Register/signUp";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import AddCar from "../Pages/AddCar/AddCar";
 import PrivateRoutes from './../Routes/PrivateRoutes';
+import MyBookings from './../Pages/MyBookings/MyBookings';
+import MyCars from './../Pages/MyCars/MyCars';
+import AvailableCars from "../Pages/AvailableCars/AvailableCars";
+import Loading from "../Pages/Loading/Loading";
+import CarDetail from "../Pages/CarDetails/CarDetail";
 
 
 export const router = createBrowserRouter([
@@ -14,13 +19,31 @@ export const router = createBrowserRouter([
     element:<RootLayout></RootLayout>,
     children:[
         {
-            index:true,
-            path:"/home",
-            Component:Home,
+          index:true,
+          path:"/home",
+          Component:Home,
+        },
+        {
+          path:"/available-cars",
+          hydrateFallbackElement:<Loading></Loading>,
+          loader:()=>fetch("http://localhost:3000/available-cars"),
+          Component:AvailableCars
+        },
+        {
+          path:"/cardetail",
+          Component:CarDetail
         },
         {
           path:"/add-car",
           element:<PrivateRoutes><AddCar></AddCar></PrivateRoutes>
+        },
+        {
+          path:"/my-cars",
+          element:<PrivateRoutes><MyCars></MyCars></PrivateRoutes>
+        },
+        {
+          path:"/my-bookings",
+          element:<PrivateRoutes><MyBookings></MyBookings></PrivateRoutes>
         },
         {
           path:'/login',
