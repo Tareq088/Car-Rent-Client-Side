@@ -11,7 +11,11 @@ const Navbar = () => {
     const navigate = useNavigate();
     const navList = <>
                 <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
-                <li className='text-lg'><NavLink to='/find_roommate' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
+                <li className='text-lg'><NavLink to='/available-cars' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
+                {
+                    user &&
+                    <li className='text-lg'><NavLink to='/add-car' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Add Car</NavLink></li>
+                }
             </>
     const handleLogOut = () =>{
         logOutUer()
@@ -24,7 +28,7 @@ const Navbar = () => {
         })
     }
     return (
-    <div className='bg-base-200 sticky top-0'>
+    <div className='bg-base-200 sticky z-10 top-0'>
             <div className="navbar justify-center items-center w-full sm:w-11/12 mx-auto pr-4 sm:px-0 py-0">
                 <div className="navbar-start">
                     <div className="dropdown">

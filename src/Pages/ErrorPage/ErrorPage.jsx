@@ -15,7 +15,7 @@ const ErrorPage = () => {
                     <img className='max-w-md' src={errorImage} alt="" />
               
                 <p className='mb-5'>Oops! The page You are looking for doesn't exist.</p>
-                <Link to='/'><Button label='Go Back Home'></Button></Link>
+                <Link to='/home'><Button label='Go Back Home'></Button></Link>
                 </div>
             </div>
     );
