@@ -1,6 +1,9 @@
 import React, { use } from 'react';
 import { AuthContext } from '../../Contexts/AuthContext';
 import Button from '../../UI/Button';
+import { format } from 'date-fns';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const AddCar = () => {
     const{user}= use(AuthContext)
@@ -8,18 +11,31 @@ const AddCar = () => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        const dataObj = Object.fromEntries(formData.entries());
+        const  carData = Object.fromEntries(formData.entries());
                             //features in array
-        dataObj.features =  dataObj.features.split(",").map(req=> req.trim(" "));
+         carData.features =   carData.features.split(",").map(req=> req.trim(" "));
                             // description in array
-        dataObj.description =  dataObj.description.split(",").map(req=> req.trim(" "));
-        console.log(dataObj);
-        console.log(Object.keys(dataObj).length)
+         carData.description =   carData.description.split(",").map(req=> req.trim(" "));
+         carData.add_Time= format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss");
+        console.log( carData);
+        const {Daily_Rent, User_name, availability, booking_Count, contact_info, description, email, 
+                                                            features, model_no, photo, registration_no} =  carData || {};
+
+        axios.post("http://localhost:3000/cars",carData)
+        .then(data=>{
+            console.log(data.data);
+            if(data.data.insertedId){
+                toast.success("car data is added to DB successfully")
+            }
+        })
+        
+       
     }
     return (
         <div>
             <div className='w-11/12 mx-auto flex justify-center'>
-                <form onSubmit={handleAddCar} className=''>
+            <p className='font-semibold'>{format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss")}</p>
+                <form onSubmit={handleAddCar}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs sm:w-sm md:w-md border p-4">
                     <legend className="fieldset-legend text-red-700 font-bold text-lg md:text-2xl">Add Car Info</legend>
                             {/* title */}
@@ -49,7 +65,7 @@ const AddCar = () => {
                     <textarea name="description" cols={5} rows={10} className="input w-full"  ></textarea>
                                 {/* Booking count */}
                     <label className="label"> Booking count </label>
-                    <input type='number' name="booking count" className="input w-full" placeholder='Booking Count(Default Count = 0)'></input>
+                    <input type='number' defaultValue="0" name="booking_Count" className="input w-full" placeholder='Booking Count(Default Count = 0)'></input>
                                 {/* Image URL */}
                     <label className="label"> Image URL </label>
                     <input type='url' name="photo"  className="input w-full" placeholder='https://example.com'></input>
