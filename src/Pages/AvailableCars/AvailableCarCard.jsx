@@ -4,8 +4,8 @@ import { TiTick } from "react-icons/ti";
 import { Link } from "react-router";
 
 const AvailableCarCard = ({ car }) => {
-  console.log(car);
-  const {Daily_Rent,User_name,availability,booking_Count,contact_info,description,email,features,model_no,photo,registration_no,location
+  // console.log(car);
+  const {Daily_Rent,User_name,availability,booking_Count,contact_info,description,email,features,model_no,photo,registration_no,location, _id
   } = car || {};
   return (
     <div>
@@ -24,8 +24,7 @@ const AvailableCarCard = ({ car }) => {
           <p className="flex gap-2 items-center"><TiTick size={15} style={{color:"green"}}></TiTick>Available </p>
           <p className="flex gap-2 items-center"><FaCar size={12} style={{color:"red"}}></FaCar>Booking Count: {booking_Count}</p>
           <div className="card-actions justify-end">
-            
-            <Link to="/cardetail" className="btn btn-primary">Book Now</Link>
+            <Link to={`/carDetail/${_id}`} className="btn btn-primary">Book Now</Link>
           </div>
         </div>
       </div>

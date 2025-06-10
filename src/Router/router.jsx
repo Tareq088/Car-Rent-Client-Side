@@ -30,7 +30,9 @@ export const router = createBrowserRouter([
           Component:AvailableCars
         },
         {
-          path:"/cardetail",
+          path:"/carDetail/:id",
+          hydrateFallbackElement:<Loading></Loading>,
+          loader: ({params})=>fetch(`http://localhost:3000/carDetail/${params.id}`),
           Component:CarDetail
         },
         {
