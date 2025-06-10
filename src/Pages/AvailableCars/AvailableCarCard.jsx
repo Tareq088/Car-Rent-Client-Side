@@ -21,7 +21,7 @@ const AvailableCarCard = ({ car }) => {
           <h2 className="card-title"><FaCar style={{color:"brown"}}></FaCar>{model_no}</h2>
           <p className="flex gap-2 items-center"><FaMoneyBillWave style={{color:"green"}}></FaMoneyBillWave>Rental Price: Tk. {Daily_Rent}/day </p>
           <p className="flex gap-2 items-center"><FaMapMarkerAlt style={{color:"blue"}}></FaMapMarkerAlt>Location: {location} </p>
-          <p className="flex gap-2 items-center"><TiTick size={15} style={{color:"green"}}></TiTick>Available </p>
+          <p className="flex gap-2 items-center"><TiTick size={15} style={{color:"green"}}></TiTick>Available: {availability} </p>
           <p className="flex gap-2 items-center"><FaCar size={12} style={{color:"red"}}></FaCar>Booking Count: {booking_Count}</p>
           <div className="card-actions justify-end">
             <Link to={`/carDetail/${_id}`} className="btn btn-primary">Book Now</Link>

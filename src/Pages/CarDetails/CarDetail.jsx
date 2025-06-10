@@ -112,12 +112,11 @@ const CarDetail = () => {
                                     dayCostMessage  && 
                                     <div>
                                       <p >Booking for: <span className='font-bold text-green-600'>{diffDays} </span> 
-                                        {`${diffDays}`>1 ? " days" : " day"}
+                                        { diffDays > 1 ? " days" : " day"}
                                       </p>
                                       <p className=''>Total Cost: <span className='font-bold text-green-600'>{totalCost}</span> Taka.</p>
                                     </div>
                                   }
-                                  
                                         {/* if there is a button in form, it will close the modal */}
                                   <div className='flex gap-2'>
                                     <button className="btn">Close</button>
