@@ -1,16 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import AvailableCarCard from "./availableCarCard";
 import AvailableCarList from "./AvailableCarList";
+import { FaSearch } from "react-icons/fa";
 
 const AvailableCars = () => {
-  const availableCars = useLoaderData();
-  const[gridView,setGridView] = useState(true)
+  const initialCars = useLoaderData();
+  const [availableCars,setAvailableCars] = useState(initialCars);
+  const[gridView,setGridView] = useState(true);
+  const[searchText, setSearchText] = useState("")
+  console.log(searchText);
   // console.log(availableCars);
+  useEffect(()=>{
+    fetch(`http://localhost:3000/available-cars?searchParams=${searchText}`)
+    .then(res=>res.json())
+    .then(searchData=>{
+      console.log("searchText",searchData);
+      setAvailableCars(searchData);
+    })
+  },[searchText])
   return (
     <div>
       <div className="flex justify-center">
-        <div>fgffvgf</div>
+        <div>
+          <form className="flex">
+            <input type="text" 
+              name="search"
+              value={searchText}
+              onChange={(e)=>setSearchText(e.target.value)}
+              className="input"/>
+            <button type="submit" className="btn"><FaSearch></FaSearch> </button>
+          </form>
+        </div>
         <div>gfgf</div>
         <div>
           <button className="btn btn-info"
@@ -23,7 +44,7 @@ const AvailableCars = () => {
       {
         gridView &&
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-             {availableCars.map((car) => (
+             {availableCars?.map((car) => (
                 <AvailableCarCard key={car._id} car={car}></AvailableCarCard>
               ))}
         </div>
@@ -54,7 +75,6 @@ const AvailableCars = () => {
                      ))
                     }
                    </tbody>
-                
             </table>
           </div> 
         </div>

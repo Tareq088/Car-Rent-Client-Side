@@ -10,7 +10,8 @@ import MyBookings from './../Pages/MyBookings/MyBookings';
 import MyCars from './../Pages/MyCars/MyCars';
 import AvailableCars from "../Pages/AvailableCars/AvailableCars";
 import Loading from "../Pages/Loading/Loading";
-import CarDetail from "../Pages/CarDetails/CarDetail";
+import CarDetail from './../Pages/CarDetails/CarDetail';
+
 
 
 export const router = createBrowserRouter([
@@ -33,7 +34,7 @@ export const router = createBrowserRouter([
           path:"/carDetail/:id",
           hydrateFallbackElement:<Loading></Loading>,
           loader: ({params})=>fetch(`http://localhost:3000/carDetail/${params.id}`),
-          Component:CarDetail
+          element:<PrivateRoutes><CarDetail></CarDetail></PrivateRoutes>
         },
         {
           path:"/add-car",
