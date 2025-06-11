@@ -5,14 +5,23 @@ import { GrUpdate } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const MyCars = () => {
   const { user } = use(AuthContext);
   const [emailData, setEmailData] = useState([]);
   const navigate = useNavigate();
+  const[count,setCount] = useState(0)
   // console.log(user.email);
-
-
+    useEffect(()=>{
+      fetch(`http://localhost:3000/cars?email=${user.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("data", data);
+          setEmailData(data);
+        });
+      },[user.email, count])
+console.log("emailed data",emailData)
     const handleDelete = (id) =>{
         console.log("deleted",id)
            Swal.fire({
@@ -62,142 +71,147 @@ const MyCars = () => {
                                                   features, model_no, photo, registration_no} =  updatedCarData || {};
       axios.patch(`http://localhost:3000/cars/${id}`, updatedCarData)
       .then(data=>{
-        console.log("updated data",data.data);
-        if(data.modifiedCount){
+        // console.log("updated data",data.data);
+        if(data.data.modifiedCount){       
                     Swal.fire({
                         icon: "success",
                         title: "Roommate data have been updated successfully",
                         showConfirmButton: false,
                         timer: 1500
                         });
+                        setCount(count+1);
+                        document.getElementById(`my_modal_1${id}`).close()
                       }
-                      // navigate("/home");
+                                   
       }) 
     }
-    useEffect(()=>{
-      fetch(`http://localhost:3000/cars?email=${user.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("email data", data);
-          setEmailData(data);
-        });
-      },[user.email])
+
   return (
     <div>
-      <div className="overflow-x-auto max-w-11/12 mx-auto">
-        <table className="table table-xs table-pin-rows table-pin-cols">
-          <thead className="border-b-2">
-            <tr className="font-bold text-xl border">
-              <th>No.</th>
-              <td>Car Image</td>
-              <td>Car Model</td>
-              <td>Daily Rental Price</td>
-              <td>Booking Count</td>
-              <td>Availability</td>
-              <td>Date Added</td>
-              <td>Comment</td>
-            </tr>
-          </thead>
-          <tbody>
-            {emailData?.map((listData, index) => (
-                        // rows start
-              <tr key={listData._id} className="border">
-                <th className="text-xs sm:text-base">{index + 1}.</th>
-                <td> <img className="h-25 w-40 rounded-xl" src={listData.photo} alt="car_img"/> </td>
-                <td className="text-xs sm:text-base">{listData.model_no}</td>
-                <td className="text-xs sm:text-base">
-                  TK:{listData.Daily_Rent}
-                </td>
-                <td className="text-xs sm:text-base">
-                  {listData.booking_Count}
-                </td>
-                <td className="text-xs sm:text-base">
-                  {listData.availability}
-                </td>
-                <td className="text-xs sm:text-base">
-                  {listData.add_Time}
-                </td>
-                <td className="text-xs sm:text-base">
-                  <div className="join join-vertical space-y-1">
-                    {/* Open the modal using document.getElementById('ID').showModal() method */}
-                        <button 
-                          className="btn btn-success w-full font-bold join-item text-green-700 btn-outline" 
-                          onClick={()=>document.getElementById(`my_modal_1${listData._id}`).showModal()}> 
-                          <GrUpdate size={20}/>
-                          UPDATE
-                          
-                        </button>
-                        <dialog id={`my_modal_1${listData._id}`} className="modal">
-                          <div className="modal-box space-y-2">
-                              <div>
-                            
-                                <form  className='space-y-2' 
-                                          onSubmit={(e)=>{handleUpdateCar(e,listData._id)}}
-                                          >
-                                    <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs sm:w-sm md:w-md border p-4">
-                                      <legend className="fieldset-legend text-red-700 font-bold text-lg md:text-2xl">Update Car Info</legend>
-                                              {/* title */}
-                                      <label className="label">Car Model</label>
-                                      <input type="text" name='model_no' className="input w-full" placeholder="Model No"/>
-                                              {/* rent */}
-                                      <label className="label">Daily Rental Price</label>
-                                      <div className='flex'>
-                                          <input type="number" name='Daily_Rent' className="input w-full" placeholder="Rent Price"/>
-                                          <input type="text" name='rent_Unit' value="Taka" className="input w-[30%]" placeholder="Taka" readOnly/>
-                                      </div>
-                                                  {/* availability */}
-                                      <label className="label">Availability</label>
-                                      <select name='availability' defaultValue="availability" className="select w-full"  >
-                                          <option disabled={true}>select availability</option>
-                                          <option>Yes</option>
-                                          <option>No</option>
-                                      </select> 
-                                                  {/* Registration Number */}
-                                      <label className="label">Registration Number</label>
-                                      <input type="text" name='registration_no' className="input w-full" placeholder="Dhaka-Metro-Kha-15-1229"/>
-                                                  {/* Features */}
-                                      <label className="label">Features</label>
-                                      <textarea name="features" cols={5} rows={10} className="input w-full"  placeholder='Enter the features'></textarea>
-                                                  {/* Description */}
-                                      <label className="label"> Description </label>
-                                      <textarea name="description" cols={5} rows={10} className="input w-full"  placeholder='Write the description'></textarea>
-                                              
-                                                  {/* Image URL */}
-                                      <label className="label"> Image URL </label>
-                                      <input type='url' name="photo"  className="input w-full" placeholder='https://example.com'></input>
-                                                  {/* Location */}
-                                      <label className="label"> Location </label>
-                                      <input type='text' name="location"  className="input w-full" placeholder='Location'></input>
-                                    </fieldset>   
-                                    <div className="flex justify-between">
-                                     
-                                            <button type="submit" className="btn btn-success">Update</button>
+      <h2 className="font-bold text-center text-2xl text-amber-800 my-5">My Cars</h2>
+      {
+        emailData.length == 0 ?
+          <div className="flex flex-col items-center justify-center space-y-3 my-10">
+              <h2 className="font-bold">Yet No car is added. Add Now! </h2>
+              <Link to="/add-car" className="btn btn-success">Add A Car</Link>
+          </div>
+        :
+          <div className="overflow-x-auto max-w-11/12 mx-auto my-5">
+            <table className="table table-xs table-pin-rows table-pin-cols">
+              <thead className="border-b-2">
+                <tr className="font-bold text-xl border">
+                  <th>No.</th>
+                  <td>Car Image</td>
+                  <td>Car Model</td>
+                  <td>Daily Rental Price</td>
+                  <td>Booking Count</td>
+                  <td>Availability</td>
+                  <td>Date Added</td>
+                  <td>Comment</td>
+                </tr>
+              </thead>
+              <tbody>
+                {emailData?.map((listData, index) => (
+                            // rows start
+                  <tr key={listData._id} className="border">
+                    <th className="text-xs sm:text-base">{index + 1}.</th>
+                    <td> <img className="h-25 w-40 rounded-xl" src={listData.photo} alt="car_img"/> </td>
+                    <td className="text-xs sm:text-base">{listData.model_no}</td>
+                    <td className="text-xs sm:text-base">
+                      TK:{listData.Daily_Rent}
+                    </td>
+                    <td className="text-xs sm:text-base">
+                      {listData.booking_Count}
+                    </td>
+                    <td className="text-xs sm:text-base">
+                      {listData.availability}
+                    </td>
+                    <td className="text-xs sm:text-base">
+                      {listData.add_Time}
+                    </td>
+                    <td className="text-xs sm:text-base">
+                      <div className="join join-vertical space-y-1">
+                        {/* Open the modal using document.getElementById('ID').showModal() method */}
+                            <button 
+                              className="btn btn-success w-full font-bold join-item text-green-700 hover:text-white btn-outline" 
+                              onClick={()=>document.getElementById(`my_modal_1${listData._id}`).showModal()}> 
+                              <GrUpdate size={20}/>
+                              UPDATE
+                              
+                            </button>
+                            <dialog id={`my_modal_1${listData._id}`} className="modal">
+                              <div className="modal-box space-y-2">
+                                  <div>
+                                
+                                    <form  className='space-y-2' 
+                                              onSubmit={(e)=>{handleUpdateCar(e,listData._id)}}
+                                              >
+                                        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs sm:w-sm md:w-md border p-4">
+                                          <legend className="fieldset-legend text-red-700 font-bold text-lg md:text-2xl">Update Car Info</legend>
+                                                  {/* title */}
+                                          <label className="label">Car Model</label>
+                                          <input type="text" name='model_no' className="input w-full" placeholder="Model No"/>
+                                                  {/* rent */}
+                                          <label className="label">Daily Rental Price</label>
+                                          <div className='flex'>
+                                              <input type="number" name='Daily_Rent' className="input w-full" placeholder="Rent Price"/>
+                                              <input type="text" name='rent_Unit' value="Taka" className="input w-[30%]" placeholder="Taka" readOnly/>
+                                          </div>
+                                                      {/* availability */}
+                                          <label className="label">Availability</label>
+                                          <select name='availability' defaultValue="availability" className="select w-full"  >
+                                              <option disabled={true}>select availability</option>
+                                              <option>Yes</option>
+                                              <option>No</option>
+                                          </select> 
+                                                      {/* Registration Number */}
+                                          <label className="label">Registration Number</label>
+                                          <input type="text" name='registration_no' className="input w-full" placeholder="Dhaka-Metro-Kha-15-1229"/>
+                                                      {/* Features */}
+                                          <label className="label">Features</label>
+                                          <textarea name="features" cols={5} rows={10} className="input w-full"  placeholder='Enter the features'></textarea>
+                                                      {/* Description */}
+                                          <label className="label"> Description </label>
+                                          <textarea name="description" cols={5} rows={10} className="input w-full"  placeholder='Write the description'></textarea>
+                                                  
+                                                      {/* Image URL */}
+                                          <label className="label"> Image URL </label>
+                                          <input type='url' name="photo"  className="input w-full" placeholder='https://example.com'></input>
+                                                      {/* Location */}
+                                          <label className="label"> Location </label>
+                                          <input type='text' name="location"  className="input w-full" placeholder='Location'></input>
+                                        </fieldset>   
+                                        <div className="flex justify-between">
                                         
-                                    </div>        
-                                </form>
-                                              {/* if there is a button in form, it will close the modal */}
-                                  <form method="dialog" >
-                                          <button className="btn">Close</button>
-                                  </form>
+                                                <button type="submit" className="btn btn-success">Save Changes</button>
+                                            
+                                        </div>        
+                                    </form>
+                                                  {/* if there is a button in form, it will close the modal */}
+                                      <form method="dialog" >
+                                              <button className="btn">Close</button>
+                                      </form>
+                                  </div>
                               </div>
-                          </div>
-                        </dialog>
-                    <button
-                      onClick={() => {
-                        handleDelete(listData._id);
-                      }}
-                      className="btn join-item text-red-600 btn-outline btn-error"
-                    >
-                      <MdDelete size={20} />
-                      DELETE
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                            </dialog>
+                        <button
+                          onClick={() => {
+                            handleDelete(listData._id);
+                          }}
+                          className="btn join-item text-red-600 hover:text-white btn-outline btn-error"
+                        >
+                          <MdDelete size={20} />
+                          DELETE
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+      }
+      
     </div>
   );
 };
