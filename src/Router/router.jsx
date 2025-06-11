@@ -42,6 +42,7 @@ export const router = createBrowserRouter([
         },
         {
           path:"/my-cars",
+          hydrateFallbackElement:<Loading></Loading>,
           element:<PrivateRoutes><MyCars></MyCars></PrivateRoutes>
         },
         {
