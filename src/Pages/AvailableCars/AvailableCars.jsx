@@ -8,42 +8,69 @@ const AvailableCars = () => {
   const initialCars = useLoaderData();
   const [availableCars,setAvailableCars] = useState(initialCars);
   const[gridView,setGridView] = useState(true);
-  const[searchText, setSearchText] = useState("")
+  const[searchText, setSearchText] = useState("");
+  const[sortOrder, setSortOrder] = useState(null)
   console.log(searchText);
   // console.log(availableCars);
+  console.log(sortOrder)
   useEffect(()=>{
-    fetch(`http://localhost:3000/available-cars?searchParams=${searchText}`)
+    const params = new URLSearchParams();
+    if(searchText || sortOrder) params.append("searchParams", searchText); params.append("sort", sortOrder);
+    console.log(params.toString())
+    fetch(`http://localhost:3000/available-cars?${params.toString()}`)
     .then(res=>res.json())
     .then(searchData=>{
       console.log("searchText",searchData);
       setAvailableCars(searchData);
     })
-  },[searchText])
+                    // single searchText
+    // fetch(`http://localhost:3000/available-cars?searchParams=${searchText}`)
+    // .then(res=>res.json())
+    // .then(searchData=>{
+    //   console.log("searchText",searchData);
+    //   setAvailableCars(searchData);
+    // })
+  },[searchText,sortOrder])
   return (
-    <div>
-      <div className="flex justify-center">
-        <div>
+    <div className="w-11/12 mx-auto  my-10">
+      <div className="flex flex-col sm:flex-row items-center  justify-between mb-5 spacey-y-2">
+                      {/* search input */}
+        <div className="mb-2">
           <form className="flex">
             <input type="text" 
               name="search"
               value={searchText}
               onChange={(e)=>setSearchText(e.target.value)}
-              className="input"/>
+              placeholder="search by Brand or Location"
+              className="input w-60 sm:w-80"/>
             <button type="submit" className="btn"><FaSearch></FaSearch> </button>
           </form>
         </div>
-        <div>gfgf</div>
-        <div>
-          <button className="btn btn-info"
-            onClick={()=>{setGridView(!gridView)}}>
-              { gridView ? "Toggle To List View":"Toggle to Grid View"}
-            </button>
+        <div className="flex gap-2 justify-center">
+                                {/* sort selector */}
+          <div>
+              <select name='choose' 
+                        Value={sortOrder}
+                        onChange={(e)=>setSortOrder(e.target.value)}
+                        className="select select-bordered w-full"  >
+                          {/* <option selected disabled={true}>select </option> */}
+                          <option value="asc" selected>Price: Low to High</option>
+                          <option value="des">Price: High to Low</option>
+                </select> 
+          </div>
+                      {/* list or grid view */}
+          <div>
+            <button className="btn btn-info"
+              onClick={()=>{setGridView(!gridView)}}>
+                { gridView ? "Toggle To List View":"Toggle to Grid View"}
+              </button>
+          </div>
         </div>
       </div>
-      <div className="w-11/12 mx-auto  my-10">
+      <div >
       {
         gridView &&
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
              {availableCars?.map((car) => (
                 <AvailableCarCard key={car._id} car={car}></AvailableCarCard>
               ))}
