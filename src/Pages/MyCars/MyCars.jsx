@@ -3,11 +3,13 @@ import { AuthContext } from "../../Contexts/AuthContext";
 import { Link } from "react-router";
 import { GrUpdate } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const MyCars = () => {
   const { user } = use(AuthContext);
   const [emailData, setEmailData] = useState([]);
-  console.log(user.email);
+  // console.log(user.email);
   useEffect(()=>{
   fetch(`http://localhost:3000/cars?email=${user.email}`)
     .then((res) => res.json())
@@ -17,8 +19,37 @@ const MyCars = () => {
     });
   },[user.email])
 
-    const handleDelete = () =>{
-        console.log("deleted")
+    const handleDelete = (id) =>{
+        console.log("deleted",id)
+           Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+                })
+                .then((result) => {
+                  if(result.isConfirmed){
+                                      // DELETE FRO DB
+                    axios.delete(`http://localhost:3000/cars/${id}`)
+                    .then(data=> {
+                      console.log("data after delete",data.data);
+                      Swal.fire({
+                                    title: "Deleted!",
+                                    text: "Roommate Data has been deleted.",
+                                    icon: "success"
+                                    });
+                                // delete from U/I
+                      const remainingData = emailData.filter(data =>data._id != id);
+                      console.log("remaining data", remainingData)
+                      setEmailData(remainingData);
+                    })
+                  }
+                  
+                })
+        
     }
     //  const {Daily_Rent, User_name, availability, booking_Count, contact_info, description, email, 
     //                                           features, model_no, photo, registration_no,add_Time} =  carData || {};

@@ -71,7 +71,7 @@ const AddCar = () => {
                     <input type='url' name="photo"  className="input w-full" placeholder='https://example.com'></input>
                                 {/* Location */}
                     <label className="label"> Location </label>
-                    <input type='url' name="location"  className="input w-full" placeholder='Location'></input>
+                    <input type='text' name="location"  className="input w-full" placeholder='Location'></input>
                              
                                         {/* contact info */}
                     <label className="label">Contact Info</label>
