@@ -82,12 +82,12 @@ const LogIn = () => {
                     <fieldset className="fieldset">
                                     {/* email */}
                         <label className="label">Email</label>
-                        <input ref={emailRef} type="email" name='email' className="input" placeholder="Email"/>
+                        <input ref={emailRef} type="email" name='email' className="input" placeholder="Email" required/>
                                   
                                     {/* password */}
                         <label className="label">Password</label>
                         <div className="join">
-                            <input type={showPassword?"text" :"password"} name='password' className="input join-item" placeholder="Password"/>
+                            <input type={showPassword?"text" :"password"} name='password' className="input join-item" placeholder="Password" required/>
                             <button type='button'
                                 onClick={()=>{
                                     setShowPassword(!showPassword)

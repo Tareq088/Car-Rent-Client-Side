@@ -10,9 +10,9 @@ const AvailableCars = () => {
   const[gridView,setGridView] = useState(true);
   const[searchText, setSearchText] = useState("");
   const[sortOrder, setSortOrder] = useState(null)
-  console.log(searchText);
+  // console.log(searchText);
   // console.log(availableCars);
-  console.log(sortOrder)
+  // console.log(sortOrder)
   useEffect(()=>{
     const params = new URLSearchParams();
     if(searchText || sortOrder) params.append("searchParams", searchText); params.append("sort", sortOrder);

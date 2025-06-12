@@ -10,7 +10,7 @@ const Navbar = () => {
     const {user, logOutUer} = use(AuthContext);
     const navigate = useNavigate();
     const navList = <>
-                <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
+                <li className='text-lg'><NavLink to='/home' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
                 <li className='text-lg'><NavLink to='/available-cars' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
                 {
                     user &&
@@ -64,7 +64,7 @@ const Navbar = () => {
                         {
                             user?
                             <div>
-                                <a data-tooltip-id="my-tooltip" data-tooltip-content={user?.displayName} className='w-12 p-0.5 rounded-full'>
+                                <a data-tooltip-id="my-tooltip" data-tooltip-content={`user: ${user?.email}(${user?.displayName})`} className='w-8 p-0.5 rounded-full'>
                                     <img className='rounded-full w-12' src={user?.photoURL}></img>
                                 </a>
                                 <Tooltip id="my-tooltip" />

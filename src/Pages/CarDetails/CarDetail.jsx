@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { FaCar, FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
 import { TiTick } from 'react-icons/ti';
 import { Link, useLoaderData } from 'react-router';
 import { MdOutlineFeaturedVideo, MdDescription } from "react-icons/md";
 import Button from '../../UI/Button';
+import { format } from 'date-fns';
+import { AuthContext } from '../../Contexts/AuthContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CarDetail = () => {
     const car = useLoaderData();
-    // console.log(car);
-    const {Daily_Rent,User_name,availability,booking_Count,contact_info,description,email,features,model_no,photo,registration_no,location, _id} = car || {};
+    const{user} = use(AuthContext);
+    console.log(user)
+    console.log("car",car);
+    const {Daily_Rent,User_name,availability,booking_Count,contact_info,description,email,features,model_no,photo,registration_no,location, _id:Booking_Id} = car || {};
     const [errorMessage, setErrorMessage] = useState(" ");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const[diffDays, setDiffDays] = useState(null);
     const[dayCostMessage,setDayCostMessage] = useState(false)
     const[totalCost, setTotalCost] = useState(null)
-
+                  // calculate days
     useEffect(()=>{
       // console.log(new Date(startDate));
       // console.log(new Date(endDate));
@@ -28,22 +34,40 @@ const CarDetail = () => {
                 // error message ke initially empty kore na rakhle ager data dhore rakhe
           setErrorMessage(" ")
           if(diffDays<0){
-            console.log(diffDays);
+            // console.log(diffDays);
             setErrorMessage("Error: Start Date is after the End Date");
           }
           else{
            setDayCostMessage(true);
-            console.log(diffDays);
+            // console.log(diffDays);
             setDiffDays(diffDays);
             setTotalCost(diffDays*Daily_Rent)
           }
           
         }
-    },[startDate,endDate,Daily_Rent])
-    // const handleConfirmBooking = (e) =>{
-    //  e.preventDefault();
-    //  console.log("confirm")
-    // }
+    },[startDate,endDate,Daily_Rent]);
+                              //handle Booking
+    const handleConfirmBooking = (e) =>{
+      e.preventDefault();
+      const start_Date = new Date(startDate);
+      const end_Date = new Date(endDate);
+      console.log(start_Date,end_Date, Booking_Id )
+      const bookedTime = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss")
+      console.log(start_Date,end_Date, bookedTime);
+      const bookingInfo = {
+        Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime,
+      }
+      console.log(bookingInfo)
+                                  // confirmation booking korle data gulo bookingDB te send korbo
+      axios.post("http://localhost:3000/bookings",bookingInfo)
+      .then(data =>{
+        console.log("after booking",data.data);
+        if(data.data.insertedId){
+          toast.success("Booking is done.");
+          document.getElementById(`my_modal_1`).close();
+        }
+      })
+    }
     //  console.log(startDate,endDate)
     return (
         <div className='bg-blue-50 '>
@@ -72,23 +96,24 @@ const CarDetail = () => {
                       </div>
                       <div className="flex flex-col gap-2 ">
                             <span className='flex gap-2 items-center text-base sm:text-lg'>
-                                <MdDescription size={12} style={{color:"red"}}></MdDescription> Description :
+                              <MdDescription size={12} style={{color:"red"}}></MdDescription> Description :
                             </span> 
                             {description.map((item,index) => <li key={index} className='ms-15'>{item}</li>)}
                       </div>
                       <div className="card-actions">
-                        {/* Open the modal using document.getElementById('ID').showModal() method */}
+                                  {/* Open the modal using document.getElementById('ID').showModal() method */}
                         <button className="btn btn-success w-full font-bold text-lg" onClick={()=>document.getElementById('my_modal_1').showModal()}>Book Now</button>
                         <dialog id="my_modal_1" className="modal">
+                           
                         <div className="modal-box space-y-2">
+                          <p className='font-semibold'>{format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss")}</p>
                             <h3 className="font-bold text-lg">Booking Confirmation</h3>
                             <p className="">You are booking for: <span className='font-bold'>{model_no}</span></p>
                             <p className="">Price Per Day: <span className='font-bold'>{Daily_Rent} Taka.</span></p>
                             <p className="">Availability: <span className='font-bold text-green-700'>{availability}</span></p>
-
                             <div className="">
-                              <form method="dialog" className='space-y-2' 
-                              // onSubmit={handleConfirmBooking}
+                              <form className='space-y-2' 
+                                onSubmit={handleConfirmBooking}
                               >
                                         {/* Date */}
                                   <label className="label"> Start Date:</label>
@@ -97,7 +122,7 @@ const CarDetail = () => {
                                     onChange={(e)=>setStartDate(e.target.value)} 
                                     name="start_date"  
                                     className="input w-full" 
-                                    placeholder='mm/dd/yyyy'>
+                                    placeholder='mm/dd/yyyy' required>
                                   </input>
                                           {/* end date */}
                                   <label className="label"> End Date:</label>
@@ -106,7 +131,7 @@ const CarDetail = () => {
                                     value={endDate} 
                                     onChange={(e)=>setEndDate(e.target.value)} 
                                     name="end_date"  className="input w-full" 
-                                    placeholder='mm/dd/yyyy'>
+                                    placeholder='mm/dd/yyyy' required>
                                   </input>
                                   {
                                     dayCostMessage  && 
@@ -119,10 +144,12 @@ const CarDetail = () => {
                                   }
                                         {/* if there is a button in form, it will close the modal */}
                                   <div className='flex gap-2'>
-                                    <button className="btn">Close</button>
-                                    <button  className="btn btn-success">Confirm Booking</button>
+                                    <button type="button" onClick={()=>document.getElementById(`my_modal_1`).close()} className="btn">Close</button>
+                                    {/* <Link to='/my-bookings' > */}
+                                      <button type='submit' className="btn btn-success">Confirm Booking</button>
+                                    {/* </Link> */}
                                   </div>
-                                     <p className='text-red-600 font-bold'>{errorMessage}</p> 
+                                  <p className='text-red-600 font-bold'>{errorMessage}</p> 
                               </form>
                             </div>
                         </div>

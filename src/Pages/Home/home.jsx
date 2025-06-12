@@ -3,8 +3,7 @@ import React from 'react';
 const Home = () => {
     return (
         <div>
-            banner
-            foollow up
+            <h2>home section</h2>
         </div>
     );
 };

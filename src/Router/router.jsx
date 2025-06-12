@@ -46,11 +46,6 @@ export const router = createBrowserRouter([
           hydrateFallbackElement:<Loading></Loading>,
           element:<PrivateRoutes><MyCars></MyCars></PrivateRoutes>
         },
-        // {
-        //   path:"/updateCarData/:id",
-        //   loader:({params})=>fetch(`http://localhost:3000/updateCarData/${params.id}`),
-        //   Component:UpdateCar
-        // },
         {
           path:"/my-bookings",
           element:<PrivateRoutes><MyBookings></MyBookings></PrivateRoutes>

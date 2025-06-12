@@ -1,18 +1,19 @@
 import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useNavigation } from "react-router";
 import { GrUpdate } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import Loading from "../Loading/Loading";
 
 const MyCars = () => {
-  const { user } = use(AuthContext);
+  const { user} = use(AuthContext);
   const [emailData, setEmailData] = useState([]);
-  const navigate = useNavigate();
-  const[count,setCount] = useState(0)
+  const[count,setCount] = useState(0);
   // console.log(user.email);
+  
     useEffect(()=>{
       fetch(`http://localhost:3000/cars?email=${user.email}`)
         .then((res) => res.json())
@@ -21,7 +22,8 @@ const MyCars = () => {
           setEmailData(data);
         });
       },[user.email, count])
-console.log("emailed data",emailData)
+
+    // console.log("emailed data",emailData)
     const handleDelete = (id) =>{
         console.log("deleted",id)
            Swal.fire({
@@ -72,25 +74,20 @@ console.log("emailed data",emailData)
       axios.patch(`http://localhost:3000/cars/${id}`, updatedCarData)
       .then(data=>{
         // console.log("updated data",data.data);
-        if(data.data.modifiedCount){       
-                    Swal.fire({
-                        icon: "success",
-                        title: "Roommate data have been updated successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                        });
+        if(data.data.modifiedCount){  
+                        toast.success("Car data are updated successfully")  ;   
                         setCount(count+1);
-                        document.getElementById(`my_modal_1${id}`).close()
-                      }
-                                   
+                        document.getElementById(`my_modal_1${id}`).close();
+                      }                        
       }) 
     }
 
   return (
-    <div>
+    <>
       <h2 className="font-bold text-center text-2xl text-amber-800 my-5">My Cars</h2>
       {
-        emailData.length == 0 ?
+        
+        emailData?.length == 0 ?
           <div className="flex flex-col items-center justify-center space-y-3 my-10">
               <h2 className="font-bold">Yet No car is added. Add Now! </h2>
               <Link to="/add-car" className="btn btn-success">Add A Car</Link>
@@ -136,13 +133,11 @@ console.log("emailed data",emailData)
                               className="btn btn-success w-full font-bold join-item text-green-700 hover:text-white btn-outline" 
                               onClick={()=>document.getElementById(`my_modal_1${listData._id}`).showModal()}> 
                               <GrUpdate size={20}/>
-                              UPDATE
-                              
+                              UPDATE 
                             </button>
                             <dialog id={`my_modal_1${listData._id}`} className="modal">
                               <div className="modal-box space-y-2">
                                   <div>
-                                
                                     <form  className='space-y-2' 
                                               onSubmit={(e)=>{handleUpdateCar(e,listData._id)}}
                                               >
@@ -150,47 +145,50 @@ console.log("emailed data",emailData)
                                           <legend className="fieldset-legend text-red-700 font-bold text-lg md:text-2xl">Update Car Info</legend>
                                                   {/* title */}
                                           <label className="label">Car Model</label>
-                                          <input type="text" name='model_no' className="input w-full" placeholder="Model No"/>
+                                          <input type="text" name='model_no' className="input w-full" placeholder="Model No" required/>
                                                   {/* rent */}
                                           <label className="label">Daily Rental Price</label>
                                           <div className='flex'>
-                                              <input type="number" name='Daily_Rent' className="input w-full" placeholder="Rent Price"/>
+                                              <input type="number" name='Daily_Rent' className="input w-full" placeholder="Rent Price" required/>
                                               <input type="text" name='rent_Unit' value="Taka" className="input w-[30%]" placeholder="Taka" readOnly/>
                                           </div>
                                                       {/* availability */}
                                           <label className="label">Availability</label>
-                                          <select name='availability' defaultValue="availability" className="select w-full"  >
+                                          <select name='availability' defaultValue="availability" className="select w-full"  required>
                                               <option disabled={true}>select availability</option>
                                               <option>Yes</option>
                                               <option>No</option>
                                           </select> 
                                                       {/* Registration Number */}
                                           <label className="label">Registration Number</label>
-                                          <input type="text" name='registration_no' className="input w-full" placeholder="Dhaka-Metro-Kha-15-1229"/>
+                                          <input type="text" name='registration_no' className="input w-full" placeholder="Dhaka-Metro-Kha-15-1229" required/>
                                                       {/* Features */}
                                           <label className="label">Features</label>
-                                          <textarea name="features" cols={5} rows={10} className="input w-full"  placeholder='Enter the features'></textarea>
+                                          <textarea name="features" cols={5} rows={10} className="input w-full"  placeholder='Enter the features' required></textarea>
                                                       {/* Description */}
                                           <label className="label"> Description </label>
-                                          <textarea name="description" cols={5} rows={10} className="input w-full"  placeholder='Write the description'></textarea>
+                                          <textarea name="description" cols={5} rows={10} className="input w-full"  placeholder='Write the description' required></textarea>
                                                   
                                                       {/* Image URL */}
                                           <label className="label"> Image URL </label>
-                                          <input type='url' name="photo"  className="input w-full" placeholder='https://example.com'></input>
+                                          <input type='url' name="photo"  className="input w-full" placeholder='https://example.com' required></input>
                                                       {/* Location */}
                                           <label className="label"> Location </label>
-                                          <input type='text' name="location"  className="input w-full" placeholder='Location'></input>
+                                          <input type='text' name="location"  className="input w-full" placeholder='Location' required></input>
                                         </fieldset>   
                                         <div className="flex justify-between">
-                                        
-                                                <button type="submit" className="btn btn-success">Save Changes</button>
-                                            
+                                          <button type="button" 
+                                          onClick={()=>document.getElementById(`my_modal_1${listData._id}`).close()} 
+                                          className="btn btn-soft">Close</button>
+                                          
+                                          <button type="submit" 
+                                          className="btn btn-success">Save Changes</button>
                                         </div>        
                                     </form>
                                                   {/* if there is a button in form, it will close the modal */}
-                                      <form method="dialog" >
-                                              <button className="btn">Close</button>
-                                      </form>
+                                      {/* <form method="dialog" >
+                                          <button className="btn">Close</button>
+                                      </form> */}
                                   </div>
                               </div>
                             </dialog>
@@ -210,9 +208,8 @@ console.log("emailed data",emailData)
               </tbody>
             </table>
           </div>
-      }
-      
-    </div>
+      }; 
+    </>
   );
 };
 
