@@ -55,7 +55,7 @@ const CarDetail = () => {
       const bookedTime = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss")
       console.log(start_Date,end_Date, bookedTime);
       const bookingInfo = {
-        Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime,
+        Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime, totalCost
       }
       console.log(bookingInfo)
                                   // confirmation booking korle data gulo bookingDB te send korbo
