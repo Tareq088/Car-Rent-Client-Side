@@ -135,6 +135,7 @@ const MyCars = () => {
                               <GrUpdate size={20}/>
                               UPDATE 
                             </button>
+                                                              {/* modal */}
                             <dialog id={`my_modal_1${listData._id}`} className="modal">
                               <div className="modal-box space-y-2">
                                   <div>

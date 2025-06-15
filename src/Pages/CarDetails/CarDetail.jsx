@@ -32,10 +32,12 @@ const CarDetail = () => {
           const diffTime = end-start;
           const diffDays = Math.ceil(diffTime/(1000*60*60*24))+1;
                 // error message ke initially empty kore na rakhle ager data dhore rakhe
-          setErrorMessage(" ")
+          setErrorMessage(" ");
+          setDayCostMessage(false);
           if(diffDays<0){
             // console.log(diffDays);
             setErrorMessage("Error: Start Date is after the End Date");
+            return;
           }
           else{
            setDayCostMessage(true);
@@ -51,12 +53,13 @@ const CarDetail = () => {
       e.preventDefault();
       const start_Date = new Date(startDate);
       const end_Date = new Date(endDate);
-      console.log(start_Date,end_Date, Booking_Id )
-      const bookedTime = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss")
-      console.log(start_Date,end_Date, bookedTime);
+      // console.log(start_Date,end_Date, Booking_Id )
+      const editedTime = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss")
+      // console.log(start_Date,end_Date, editedTime);
       const bookingInfo = {
         Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime, totalCost
       }
+      //Booking_Id = carsCollection er _id
       console.log(bookingInfo)
                                   // confirmation booking korle data gulo bookingDB te send korbo
       axios.post("http://localhost:3000/bookings",bookingInfo)
@@ -103,6 +106,7 @@ const CarDetail = () => {
                       <div className="card-actions">
                                   {/* Open the modal using document.getElementById('ID').showModal() method */}
                         <button className="btn btn-success w-full font-bold text-lg" onClick={()=>document.getElementById('my_modal_1').showModal()}>Book Now</button>
+                                                               {/* modal */}
                         <dialog id="my_modal_1" className="modal">
                            
                         <div className="modal-box space-y-2">
