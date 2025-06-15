@@ -1,13 +1,17 @@
 import axios from "axios";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const MyBookingRow = ({ book, index, count,setCount }) => {
-  console.log("book", book);
+console.log("book", book);
+//   const [startingDate, setStartingDate] = useState(null);
+// console.log(format(startingDate,'dd-MM-yyyy'));
+// console.log(typeof(format(startingDate,'dd-MM-yyyy')))
   const [errorMessage, setErrorMessage] = useState(" ");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -61,7 +65,9 @@ const MyBookingRow = ({ book, index, count,setCount }) => {
                     // handle confirm button
   const handleConfirm = (e,book_id) => {
     e.preventDefault();
-    const editedBookingInfo = {start_Date:startDate, end_Date:endDate, totalCost}
+    const start_Date = format(new Date(startDate), "EEEE, MMMM dd, yyyy, kk:mm:ss");
+    const end_Date = format(new Date(endDate), "EEEE, MMMM dd, yyyy, kk:mm:ss");
+    const editedBookingInfo = {start_Date, end_Date, totalCost}
     axios.patch(`http://localhost:3000/bookings/${book_id}`,editedBookingInfo)
     .then(data=>{
         // console.log(data.data);
@@ -89,7 +95,7 @@ const MyBookingRow = ({ book, index, count,setCount }) => {
             console.log(data.data);
             if (data.data.modifiedCount) {
               toast.success("Booking is canceled");
-              setCount(count+1)
+              setCount(count+1);
               // console.log("data is canceled");
             }
           });
@@ -126,7 +132,6 @@ const MyBookingRow = ({ book, index, count,setCount }) => {
             <div>
               <div>
                 <button
-                  //  onClick={handleModifyDates}
                   onClick={() =>document.getElementById(`my_modal_1${book._id}`).showModal()}
                   className="btn btn-outline btn-info flex gap-3 items-center justify-center py-7"
                 >
@@ -147,8 +152,9 @@ const MyBookingRow = ({ book, index, count,setCount }) => {
                       Price Per Day:{" "}
                       <span className="font-bold">{book.Daily_Rent} Taka.</span>
                     </p>
-
-                    <div className="">
+                    {/* <DatePicker selected={startingDate} onChange={(date) => setStartingDate(date)} className="input input-bordered w-full" placeholderText="pick a date" dateFormat="dd-MM-yyyy"/> */}
+                        <br />
+                    <div>
                       <form className="space-y-2" onSubmit={(e)=>handleConfirm(e,book._id)}>
                         {/* Date */}
                         <label className="label"> Start Date:</label>

@@ -45,17 +45,15 @@ const CarDetail = () => {
             setDiffDays(diffDays);
             setTotalCost(diffDays*Daily_Rent)
           }
-          
         }
     },[startDate,endDate,Daily_Rent]);
                               //handle Booking
     const handleConfirmBooking = (e) =>{
       e.preventDefault();
-      const start_Date = new Date(startDate);
-      const end_Date = new Date(endDate);
-      // console.log(start_Date,end_Date, Booking_Id )
-      const editedTime = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss")
-      // console.log(start_Date,end_Date, editedTime);
+      const start_Date = format(new Date(startDate), "EEEE, MMMM dd, yyyy, kk:mm:ss");
+      const end_Date = format(new Date(endDate), "EEEE, MMMM dd, yyyy, kk:mm:ss"); 
+      const bookedTime = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss");
+      // console.log(start_Date,end_Date, bookedTime);
       const bookingInfo = {
         Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime, totalCost
       }

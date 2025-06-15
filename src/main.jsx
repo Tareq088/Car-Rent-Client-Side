@@ -6,6 +6,7 @@ import {RouterProvider} from "react-router";
 import { router } from './Router/router.jsx';
 import AuthProvider from './Contexts/AuthProvider.jsx';
 import { ToastContainer } from 'react-toastify';
+import "react-datepicker/dist/react-datepicker.css";
 
 
 createRoot(document.getElementById('root')).render(
