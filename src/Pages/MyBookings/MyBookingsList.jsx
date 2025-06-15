@@ -3,13 +3,14 @@ import React, { use } from "react";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const MyBookingsList = ({ bookingsPromise }) => {
   const bookingData = use(bookingsPromise);
   console.log("booking data", bookingData);
 //   Booking_Id, applicant, bookedTime,  end_Date, model_no, photo, start_Date, _id,totalCost = booking
 const handleStatusChange =(e,book_id) =>{
-    console.log(e.target.value, book_id);
+    // console.log(e.target.value, book_id);
     axios.patch(`http://localhost:3000/bookings/${book_id}`, {status:e.target.value})
     .then(data=> {
         console.log(data.data)
@@ -21,8 +22,28 @@ const handleStatusChange =(e,book_id) =>{
         console.log(error);
     })
 }
-const handleDelete = () =>{
-    console.log("delete")
+const handleDelete = (book_id) =>{
+          Swal.fire({
+                  title: "Are you sure to cancel this booking?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  cancelButtonText:"No",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Yes"
+                  })
+                  .then((result) => {
+                    if(result.isConfirmed){
+                      axios.patch(`http://localhost:3000/bookings/${book_id}`, {status:"Cancel"})
+                      .then(data=> {
+                        console.log(data.data);
+                        if(data.data.modifiedCount){
+                            toast.success("Booking is canceled");
+                            console.log("data is canceled");
+                        }
+                      })
+                    }
+                  })
 }
   return (
     <div>
