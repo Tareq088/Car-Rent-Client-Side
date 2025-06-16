@@ -21,7 +21,8 @@ const MyBookings = () => {
     },[user.email, count])
 
     return (
-        <div>
+        <div className='max-w-11/12 mx-auto'>
+            <h2 className="font-bold text-center text-2xl text-amber-800 my-5">My Bookings</h2>
             <Suspense fallback={<Loading></Loading>}>
                 {/* <MyBookingsList bookingsPromise={bookingsPromise}></MyBookingsList> */}
                 <MyBookingsList 
