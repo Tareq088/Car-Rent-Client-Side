@@ -33,6 +33,7 @@ const AvailableCars = () => {
   },[searchText,sortOrder])
   return (
     <div className="w-11/12 mx-auto  my-10">
+      <h2 className="font-bold text-center text-2xl text-amber-800 my-5">Available Cars</h2>
       <div className="flex flex-col sm:flex-row items-center  justify-between mb-5 spacey-y-2">
                       {/* search input */}
         <div className="mb-2">
