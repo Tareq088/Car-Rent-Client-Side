@@ -13,7 +13,7 @@ const AvailableCarCard = ({ car }) => {
         <figure>
           <img
             src={photo}
-            className="rounded-2xl w-full h-40"
+            className="rounded-2xl w-full h-40 object-cover object-center"
             alt="Car Photo"
           />
         </figure>
