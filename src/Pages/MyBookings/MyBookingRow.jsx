@@ -118,14 +118,14 @@ console.log("book", book);
         <td className="text-sm">
           <select
             onChange={(e) => handleStatusChange(e, book._id)}
-            // name="status"
+            name="status"
             value={book.status}
             className="select"
           >
             {/* <option disabled={true}>{book.status}</option> */}
-            <option value="Pending">Pending</option>
-            <option value="Confirm">Confirm</option>
-            <option value="Cancel">Cancel</option>
+            <option>Pending</option>
+            <option>Confirm</option>
+            <option>Cancel</option>
           </select>
         </td>
         <td>

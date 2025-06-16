@@ -12,16 +12,17 @@ const MyCars = () => {
   const { user} = use(AuthContext);
   const [emailData, setEmailData] = useState([]);
   const[count,setCount] = useState(0);
+  const[sortOrder, setSortOrder] = useState("asc")
   // console.log(user.email);
   
     useEffect(()=>{
-      fetch(`http://localhost:3000/cars?email=${user.email}`)
+      fetch(`http://localhost:3000/cars?email=${user.email}&sort=${sortOrder}`)
         .then((res) => res.json())
         .then((data) => {
           console.log("data", data);
           setEmailData(data);
         });
-      },[user.email, count])
+      },[user.email, count,sortOrder])
 
     // console.log("emailed data",emailData)
     const handleDelete = (id) =>{
@@ -85,6 +86,17 @@ const MyCars = () => {
   return (
     <>
       <h2 className="font-bold text-center text-2xl text-amber-800 my-5">My Cars</h2>
+           {/* sort selector */}
+          <div className="text-center">
+              <select name='choose' 
+                        Value={sortOrder}
+                        onChange={(e)=>setSortOrder(e.target.value)}
+                        className="select select-bordered"  >
+                          {/* <option selected disabled={true}>select </option> */}
+                          <option value="asc" selected>Price: Low to High</option>
+                          <option value="des">Price: High to Low</option>
+                </select> 
+          </div>
       {
         
         emailData?.length == 0 ?
@@ -110,7 +122,7 @@ const MyCars = () => {
               <tbody>
                 {emailData?.map((listData, index) => (
                             // rows start
-                  <tr key={listData._id} className="border">
+                  <tr key={listData._id} className="border hover:bg-amber-100">
                     <th className="text-xs sm:text-base">{index + 1}.</th>
                     <td> <img className="h-25 w-40 rounded-xl" src={listData.photo} alt="car_img"/> </td>
                     <td className="text-xs sm:text-base">{listData.model_no}</td>

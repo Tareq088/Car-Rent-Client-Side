@@ -9,7 +9,7 @@ const AvailableCars = () => {
   const [availableCars,setAvailableCars] = useState(initialCars);
   const[gridView,setGridView] = useState(true);
   const[searchText, setSearchText] = useState("");
-  const[sortOrder, setSortOrder] = useState(null)
+  const[sortOrder, setSortOrder] = useState("asc")
   // console.log(searchText);
   // console.log(availableCars);
   // console.log(sortOrder)
