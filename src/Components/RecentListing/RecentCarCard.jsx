@@ -14,13 +14,15 @@ const RecentCarCard = ({ recentCar }) => {
     useEffect(()=>{
         const creationTimeString = add_Time;
         const todayTimeString = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss");
+            // format() diye date gulo string type hoy. ederke object e transfer korte hbe (date biog korte chaile)
+            // convert to object
         const formatString = "EEEE, MMMM dd, yyyy, kk:mm:ss";
         const creationTime = parse(creationTimeString, formatString, new Date());
         const todayTime = parse(todayTimeString, formatString, new Date());
-        console.log(creationTime, todayTime);
+        // console.log(creationTime, todayTime);
         const diffTime = todayTime-creationTime;
         const diffDays = Math.ceil(diffTime/(1000*60*60*24));
-        console.log("diffDay", diffDays);
+        // console.log("diffDay", diffDays);
         setDays(diffDays)
     },[recentCar,add_Time])
   return (
