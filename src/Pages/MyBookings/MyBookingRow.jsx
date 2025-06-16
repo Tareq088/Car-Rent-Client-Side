@@ -7,7 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
-const MyBookingRow = ({ book, index, count,setCount, setStatus }) => {
+const MyBookingRow = ({ book, index, count,setCount}) => {
 console.log("book", book);
 //   const [startingDate, setStartingDate] = useState(null);
 // console.log(format(startingDate,'dd-MM-yyyy'));
@@ -26,9 +26,10 @@ console.log("book", book);
     // console.log(e.target.value, book_id);
     axios.patch(`http://localhost:3000/bookings/${book_id}`, {status: e.target.value})
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         if (data.data.modifiedCount) {
           toast.success("status is updated");
+          setCount(count+1);
         }
       })
       .catch((error) => {
@@ -93,10 +94,9 @@ console.log("book", book);
         axios.patch(`http://localhost:3000/bookings/${book_id}`, {status: "Cancel"})
           .then((data) => {
             console.log(data.data);
-            setCount(count+1);
             if (data.data.modifiedCount) {
               toast.success("Booking is canceled");
-              setStatus("Cancel")
+              setCount(count+1);
               // console.log("data is canceled");
             }
           });
@@ -118,14 +118,14 @@ console.log("book", book);
         <td className="text-sm">
           <select
             onChange={(e) => handleStatusChange(e, book._id)}
-            name="status"
-            defaultValue={book.status}
+            // name="status"
+            value={book.status}
             className="select"
           >
             {/* <option disabled={true}>{book.status}</option> */}
-            <option>Pending</option>
-            <option>Confirm</option>
-            <option>Cancel</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirm">Confirm</option>
+            <option value="Cancel">Cancel</option>
           </select>
         </td>
         <td>
@@ -205,12 +205,10 @@ console.log("book", book);
                             className="btn"
                           >
                             Close
-                          </button>
-                          
+                          </button> 
                           <button type="submit" className="btn btn-success">
                             Confirm 
                           </button>
-                        
                         </div>
                         <p className="text-red-600 font-bold">{errorMessage}</p>
                       </form>

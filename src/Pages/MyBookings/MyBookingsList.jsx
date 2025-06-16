@@ -8,7 +8,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { format } from "date-fns";
 import MyBookingRow from "./MyBookingRow";
 
-const MyBookingsList = ({ bookingsData,count, setCount,setStatus }) => {
+const MyBookingsList = ({ bookingsData,count, setCount}) => {
   // const bookingsData = use(bookingsPromise);
     // console.log("booking data", bookingsData);
 
@@ -39,7 +39,7 @@ const MyBookingsList = ({ bookingsData,count, setCount,setStatus }) => {
               key={index} 
               count={count}
               setCount = {setCount}
-              setStatus={setStatus}
+             
               ></MyBookingRow>
             ))}
           </tbody>

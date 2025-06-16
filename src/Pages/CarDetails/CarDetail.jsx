@@ -21,7 +21,6 @@ const CarDetail = () => {
     const[diffDays, setDiffDays] = useState(null);
     const[dayCostMessage,setDayCostMessage] = useState(false)
     const[totalCost, setTotalCost] = useState(null);
-    const[status,setStatus] = useState("Confirm");
                   // calculate days
     useEffect(()=>{
       // console.log(new Date(startDate));
@@ -55,8 +54,9 @@ const CarDetail = () => {
       const end_Date = format(new Date(endDate), "EEEE, MMMM dd, yyyy, kk:mm:ss"); 
       const bookedTime = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss");
       // console.log(start_Date,end_Date, bookedTime);
+      // initially status ta confirm kore dilam
       const bookingInfo = {
-        Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime, totalCost,status
+        Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime, totalCost,status:"Confirm"
       }
       //Booking_Id = carsCollection er _id
       console.log(bookingInfo)
