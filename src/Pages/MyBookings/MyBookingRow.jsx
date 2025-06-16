@@ -7,7 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
-const MyBookingRow = ({ book, index, count,setCount }) => {
+const MyBookingRow = ({ book, index, count,setCount, setStatus }) => {
 console.log("book", book);
 //   const [startingDate, setStartingDate] = useState(null);
 // console.log(format(startingDate,'dd-MM-yyyy'));
@@ -93,9 +93,10 @@ console.log("book", book);
         axios.patch(`http://localhost:3000/bookings/${book_id}`, {status: "Cancel"})
           .then((data) => {
             console.log(data.data);
+            setCount(count+1);
             if (data.data.modifiedCount) {
               toast.success("Booking is canceled");
-              setCount(count+1);
+              setStatus("Cancel")
               // console.log("data is canceled");
             }
           });
@@ -104,17 +105,17 @@ console.log("book", book);
   };
   return (
     <>
-      <tr key={book._id} className="hover:bg-amber-100 shadow-2xl">
-        <td>{index + 1}</td>
+      <tr key={book._id} className="hover:bg-amber-100 shadow-2xl p-0">
+        <td className="text-sm">{index + 1}</td>
         <td>
           <img className="h-20 w-35 rounded-xl" src={book?.photo} alt="" />
         </td>
-        <td>{book?.model_no}</td>
-        <td>{book?.bookedTime}</td>
-        <td>{book?.start_Date.split("T")[0]} </td>
-        <td>{book?.end_Date.split("T")[0]} </td>
-        <td>{book?.totalCost} Taka </td>
-        <td>
+        <td className="text-sm">{book?.model_no}</td>
+        <td className="text-sm">{book?.bookedTime}</td>
+        <td className="text-xs">{book?.start_Date.split("T")[0]} </td>
+        <td className="text-xs">{book?.end_Date.split("T")[0]} </td>
+        <td className="text-sm">{book?.totalCost} Taka </td>
+        <td className="text-sm">
           <select
             onChange={(e) => handleStatusChange(e, book._id)}
             name="status"

@@ -10,7 +10,7 @@ const ChooseUs = () => {
     <div className="max-w-11/12 mx-auto pb-10">
         <h2 className="font-bold text-center text-2xl text-amber-800 my-10">Why Choose Us?</h2>
         <div className="flex flex-col gap-10 sm:flex-row">
-          <div className= "card p-5 bg-red-50 shadow-sm flex flex-col items-center justify-center">
+          <div className= "card p-5 bg-red-50 shadow-sm flex flex-1 flex-col items-center justify-center">
             <figure className=" rounded-full bg-white w-18 h-18 mb-5">
               <FaCar size={30} color="red"></FaCar>
             </figure>
@@ -25,7 +25,7 @@ const ChooseUs = () => {
             </Link>
             </div>
           </div>
-          <div className= "card p-5 bg-red-50 shadow-sm flex flex-col items-center justify-center">
+          <div className= "card p-5 bg-red-50 shadow-sm flex flex-1 flex-col items-center justify-center">
             <figure className=" rounded-full bg-white w-18 h-18 mb-5">
               <GiTakeMyMoney size={30} color="green"/>
             </figure>
@@ -40,7 +40,7 @@ const ChooseUs = () => {
             </Link>
             </div>
           </div>
-          <div className= "card p-5 bg-red-50 shadow-sm flex flex-col items-center justify-center">
+          <div className= "card p-5 bg-red-50 shadow-sm flex flex-1 flex-col items-center justify-center">
             <figure className=" rounded-full bg-white w-18 h-18 mb-5">
               <TbBrandBooking size={30} color="blue"/>
             </figure>
@@ -55,7 +55,7 @@ const ChooseUs = () => {
             </Link>
             </div>
           </div>
-          <div className= "card p-5 bg-red-50 shadow-sm flex flex-col items-center justify-center">
+          <div className= "card p-5 bg-red-50 shadow-sm flex flex-1 flex-col items-center justify-center">
             <figure className=" rounded-full bg-white w-18 h-18 mb-5">
               <IoMdCall size={30}/>
             </figure>

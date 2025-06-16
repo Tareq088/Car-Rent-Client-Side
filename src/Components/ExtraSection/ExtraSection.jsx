@@ -40,7 +40,7 @@ const ExtraSection = () => {
     return (
         <div>
             <div className='w-11/12 mx-auto h-full'>
-                <div className='flex  flex-col sm:flex-row-reverse py-10'>
+                <div className='flex  flex-col sm:flex-row-reverse py-5'>
                     <div className='w-full text-center'>
                         <h2 className='font-bold text-center text-2xl text-amber-800 mb-5"'>How It Works</h2>
                         <div className="p-6 space-y-4">

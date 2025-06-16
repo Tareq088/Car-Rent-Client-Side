@@ -11,14 +11,15 @@ const MyBookings = () => {
     // const bookingsPromise = fetch(`http://localhost:3000/bookings?email=${user.email}`).then(res=>res.json())
     // console.log(bookingsPromise);
     const [bookingsData,setBookingsData] = useState([]);
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0);
+    const[status,setStatus] = useState("Confirm")
     useEffect (()=>{
         fetch(`http://localhost:3000/bookings?email=${user.email}`)
         .then(res=>res.json())
         .then(data=>{
             setBookingsData(data)
         })
-    },[user.email, count])
+    },[user.email, count,status])
 
     return (
         <div className='max-w-11/12 mx-auto'>
@@ -28,6 +29,7 @@ const MyBookings = () => {
                 <MyBookingsList 
                 count={count}
                 setCount = {setCount}
+                setStatus = {setStatus}
                 bookingsData={bookingsData}></MyBookingsList>
             </Suspense>
         </div>

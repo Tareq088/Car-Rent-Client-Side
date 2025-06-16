@@ -20,7 +20,8 @@ const CarDetail = () => {
     const [endDate, setEndDate] = useState("");
     const[diffDays, setDiffDays] = useState(null);
     const[dayCostMessage,setDayCostMessage] = useState(false)
-    const[totalCost, setTotalCost] = useState(null)
+    const[totalCost, setTotalCost] = useState(null);
+    const[status,setStatus] = useState("Confirm");
                   // calculate days
     useEffect(()=>{
       // console.log(new Date(startDate));
@@ -55,7 +56,7 @@ const CarDetail = () => {
       const bookedTime = format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss");
       // console.log(start_Date,end_Date, bookedTime);
       const bookingInfo = {
-        Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime, totalCost
+        Booking_Id, applicant: user?.email,photo,model_no, start_Date, end_Date, bookedTime, totalCost,status
       }
       //Booking_Id = carsCollection er _id
       console.log(bookingInfo)
