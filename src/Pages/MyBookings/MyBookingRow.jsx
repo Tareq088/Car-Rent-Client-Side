@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const MyBookingRow = ({ book, index, count,setCount}) => {
-console.log("book", book);
+// console.log("book", book);
 //   const [startingDate, setStartingDate] = useState(null);
 // console.log(format(startingDate,'dd-MM-yyyy'));
 // console.log(typeof(format(startingDate,'dd-MM-yyyy')))
@@ -23,7 +23,7 @@ console.log("book", book);
   //book_id=book._id= bookingsCollection er _id
   //Booking_Id= carsCollection er _id
   const handleStatusChange = (e, book_id) => {
-    // console.log(e.target.value, book_id);
+    console.log(e.target.value, book_id);
     axios.patch(`http://localhost:3000/bookings/${book_id}`, {status: e.target.value})
       .then((data) => {
         // console.log(data.data);
@@ -39,7 +39,7 @@ console.log("book", book);
                         //modify dates
             //error message
   useEffect(()=>{
-    console.log(new Date(startDate));
+    // console.log(new Date(startDate));
     // console.log(new Date(endDate));
     // console.log(typeof(new Date(startDate)))
       if( startDate && endDate){
