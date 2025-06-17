@@ -19,7 +19,7 @@ const MyCars = () => {
       fetch(`http://localhost:3000/cars?email=${user.email}&sort=${sortOrder}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log("data", data);
+          // console.log("data", data);
           setEmailData(data);
         });
       },[user.email, count,sortOrder])
@@ -89,11 +89,11 @@ const MyCars = () => {
            {/* sort selector */}
           <div className="text-center">
               <select name='choose' 
-                        Value={sortOrder}
+                        value={sortOrder}
                         onChange={(e)=>setSortOrder(e.target.value)}
                         className="select select-bordered"  >
                           {/* <option selected disabled={true}>select </option> */}
-                          <option value="asc" selected>Price: Low to High</option>
+                          <option value="asc">Price: Low to High</option>
                           <option value="des">Price: High to Low</option>
                 </select> 
           </div>

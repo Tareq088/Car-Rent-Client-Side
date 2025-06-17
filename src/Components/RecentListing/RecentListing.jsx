@@ -14,7 +14,7 @@ const RecentListing = () => {
         })
         setLoading(false)
     },[]);
-    console.log(recentCars);
+    // console.log(recentCars);
 
     if(loading){
         return <Loading></Loading>

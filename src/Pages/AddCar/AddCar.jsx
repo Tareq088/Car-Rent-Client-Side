@@ -6,7 +6,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const AddCar = () => {
-    const{user}= use(AuthContext)
+    const{user}= use(AuthContext);
+    console.log(user.accessToken)
     const handleAddCar = (e) =>{
         e.preventDefault();
         const form = e.target;

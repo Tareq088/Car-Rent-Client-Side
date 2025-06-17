@@ -16,11 +16,11 @@ const AvailableCars = () => {
   useEffect(()=>{
     const params = new URLSearchParams();
     if(searchText || sortOrder) params.append("searchParams", searchText); params.append("sort", sortOrder);
-    console.log(params.toString())
+    // console.log(params.toString())
     fetch(`http://localhost:3000/available-cars?${params.toString()}`)
     .then(res=>res.json())
     .then(searchData=>{
-      console.log("searchText",searchData);
+      // console.log("searchText",searchData);
       setAvailableCars(searchData);
     })
                     // single searchText
@@ -51,11 +51,11 @@ const AvailableCars = () => {
                                 {/* sort selector */}
           <div>
               <select name='choose' 
-                        Value={sortOrder}
+                        value={sortOrder}
                         onChange={(e)=>setSortOrder(e.target.value)}
                         className="select select-bordered w-full"  >
                           {/* <option selected disabled={true}>select </option> */}
-                          <option value="asc" selected>Price: Low to High</option>
+                          <option value="asc">Price: Low to High</option>
                           <option value="des">Price: High to Low</option>
                 </select> 
           </div>

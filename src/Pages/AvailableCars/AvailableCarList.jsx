@@ -4,7 +4,7 @@ import { TiTick } from "react-icons/ti";
 import { Link } from "react-router";
 
 const AvailableCarList = ({ car,index }) => {
-  console.log(car);
+  // console.log(car);
   const {
     Daily_Rent,
     User_name,
