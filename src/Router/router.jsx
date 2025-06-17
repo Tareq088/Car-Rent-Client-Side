@@ -25,6 +25,10 @@ export const router = createBrowserRouter([
           path:"/home",
           Component:Home,
         },
+        // {
+        //   path:"/home",
+        //   Component:Home,
+        // },
         {
           path:"/available-cars",
           hydrateFallbackElement:<Loading></Loading>,
