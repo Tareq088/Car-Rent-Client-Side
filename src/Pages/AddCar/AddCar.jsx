@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 const AddCar = () => {
     const{user}= use(AuthContext);
-    console.log(user.accessToken)
+    // console.log(user.accessToken)
     const handleAddCar = (e) =>{
         e.preventDefault();
         const form = e.target;
@@ -29,8 +29,6 @@ const AddCar = () => {
                 toast.success("car data is added to DB successfully")
             }
         })
-        
-       
     }
     return (
         <div>

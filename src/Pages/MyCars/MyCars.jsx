@@ -10,13 +10,16 @@ import Loading from "../Loading/Loading";
 
 const MyCars = () => {
   const { user} = use(AuthContext);
+  console.log("token", user.accessToken)
   const [emailData, setEmailData] = useState([]);
   const[count,setCount] = useState(0);
   const[sortOrder, setSortOrder] = useState("asc")
   // console.log(user.email);
+  // {headers:{authorization:`Bearer ${user.accessToken}}}
   
     useEffect(()=>{
-      fetch(`http://localhost:3000/cars?email=${user.email}&sort=${sortOrder}`)
+      fetch(`http://localhost:3000/cars?email=${user.email}&sort=${sortOrder}`,
+        {headers:{authorization:`Bearer ${user.accessToken}`}})
         .then((res) => res.json())
         .then((data) => {
           // console.log("data", data);

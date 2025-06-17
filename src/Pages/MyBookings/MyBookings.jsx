@@ -2,10 +2,15 @@ import React, { Suspense, use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthContext';
 import MyBookingsList from './MyBookingsList';
 import Loading from '../Loading/Loading';
+        // ager
+// import {bookingPromise} from "../../Api/bookingApi"
+                //new
+import useBookingApi from './../../Api/useBookingApi';
 
 
 const MyBookings = () => {
     const{user} = use(AuthContext);
+    const {bookingPromise} = useBookingApi()
     // console.log("user",user);
                     // jehetu cancel, modify button e click korle data auto change hbe tai useEffect() diye korte hbe
     // const bookingsPromise = fetch(`http://localhost:3000/bookings?email=${user.email}`).then(res=>res.json())
@@ -14,8 +19,13 @@ const MyBookings = () => {
     const [count, setCount] = useState(0);
  
     useEffect (()=>{
-        fetch(`http://localhost:3000/bookings?email=${user.email}`)
-        .then(res=>res.json())
+        // fetch(`http://localhost:3000/bookings?email=${user.email}`,
+        //             {headers:{authorization: `Bearer ${user.accessToken}`}})
+        // .then(res=>res.json())
+                                                    // ager
+                                    bookingPromise(user?.email, user?.accessToken)
+                                    //new
+        bookingPromise(user?.email)
         .then(data=>{
             setBookingsData(data)
         })
