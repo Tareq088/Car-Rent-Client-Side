@@ -1,17 +1,35 @@
 import React, { use, useEffect, useState } from 'react';
 import { FaCar, FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
 import { TiTick } from 'react-icons/ti';
-import { Link, useLoaderData } from 'react-router';
+import { Link, useLoaderData, useParams } from 'react-router';
 import { MdOutlineFeaturedVideo, MdDescription } from "react-icons/md";
 import Button from '../../UI/Button';
 import { format } from 'date-fns';
 import { AuthContext } from '../../Contexts/AuthContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import useDetailApi from '../../Api/useDetailApi';
 
 const CarDetail = () => {
-    const car = useLoaderData();
-    const{user} = use(AuthContext);
+    // const car = useLoaderData();
+    const {id} = useParams();
+    const[car,setCar] = useState([]);
+    const {user,setLoading} = use(AuthContext);
+    const {detailPromise} = useDetailApi();
+    
+      useEffect(()=>{
+        // fetch(`http://localhost:3000/carDetail/${id}`,
+        //   {headers:{authorization: `Bearer ${user.accessToken}`}}
+        // )
+        // .then(res=>res.json())
+        detailPromise(id)
+        .then(data=>{
+            setCar(data);
+            console.log(data);
+            setLoading(false)
+        })
+      },[id,setLoading])
+    
     // console.log(user)
     // console.log("car",car);
     const {Daily_Rent,User_name,availability,booking_Count,contact_info,description,email,features,model_no,photo,registration_no,location, _id:Booking_Id} = car || {};
@@ -57,7 +75,7 @@ const CarDetail = () => {
       }
       //Booking_Id = carsCollection er _id
                                   // confirmation booking korle data gulo bookingDB te send korbo
-      axios.post("https://car-rent-server-lovat.vercel.app/bookings",bookingInfo)
+      axios.post("http://localhost:3000/bookings",bookingInfo)
       .then(data =>{
         // console.log("after booking",data.data);
         if(data.data.insertedId){
@@ -67,7 +85,7 @@ const CarDetail = () => {
       })
                           //  carsCollection er car_id booking_count o  1 barabo
                           //  carsCollection er _id = Booking_Id
-      axios.patch(`https://car-rent-server-lovat.vercel.app/available-cars/${Booking_Id}/increment`)
+      axios.patch(`http://localhost:3000/available-cars/${Booking_Id}/increment`)
       .then(data=>{
         console.log(data.data);
         if(data.data.modifiedCount){
@@ -99,13 +117,13 @@ const CarDetail = () => {
                             <span className='flex gap-2 items-center text-base sm:text-lg'>
                                 <MdOutlineFeaturedVideo size={12} style={{color:"red"}}></MdOutlineFeaturedVideo>Features:
                             </span> 
-                            {features.map((item,index) => <li key={index} className='ms-15'>{item}</li>)}
+                            {features?.map((item,index) => <li key={index} className='ms-15'>{item}</li>)}
                       </div>
                       <div className="flex flex-col gap-2 ">
                             <span className='flex gap-2 items-center text-base sm:text-lg'>
                               <MdDescription size={12} style={{color:"red"}}></MdDescription> Description :
                             </span> 
-                            {description.map((item,index) => <li key={index} className='ms-15'>{item}</li>)}
+                            {description?.map((item,index) => <li key={index} className='ms-15'>{item}</li>)}
                       </div>
                       <div className="card-actions">
                                   {/* Open the modal using document.getElementById('ID').showModal() method */}

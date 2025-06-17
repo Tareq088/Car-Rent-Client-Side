@@ -10,7 +10,7 @@ const Navbar = () => {
     const {user, logOutUer} = use(AuthContext);
     const navigate = useNavigate();
     const navList = <>
-                <li className='text-lg'><NavLink to='/home' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
+                <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
                 <li className='text-lg'><NavLink to='/available-cars' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
                 {
                     user &&

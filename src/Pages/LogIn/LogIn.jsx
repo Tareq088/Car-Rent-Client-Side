@@ -28,7 +28,7 @@ const LogIn = () => {
                         showConfirmButton: false,
                         timer: 1500
                     });
-                    navigate(location.state || "/home")
+                    navigate(location.state || "/")
         })
         .catch(error =>{
             // console.log(error.message.split("/")[1].split(")")[0]);
@@ -54,7 +54,7 @@ const LogIn = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
-            navigate(location.state || "/home")
+            navigate(location.state || "/")
         })
         .catch(error =>{
             Swal.fire({icon:"error", title:`${error.message}`});

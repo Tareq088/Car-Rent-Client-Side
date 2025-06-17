@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 const axiosInstance = axios.create({
-    baseURL:"https://car-rent-server-lovat.vercel.app"
+    baseURL:"http://localhost:3000"
 })
 
 const useAxiosSecure = () => {

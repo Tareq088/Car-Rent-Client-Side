@@ -20,7 +20,7 @@ const MyCars = () => {
   // {headers:{authorization:`Bearer ${user.accessToken}}}
   
     useEffect(()=>{
-      // fetch(`https://car-rent-server-lovat.vercel.app/cars?email=${user.email}&sort=${sortOrder}`,
+      // fetch(`http://localhost:3000/cars?email=${user.email}&sort=${sortOrder}`,
       //   {headers:{authorization:`Bearer ${user.accessToken}`}})
       //   .then((res) => res.json())
             //new
@@ -46,7 +46,7 @@ const MyCars = () => {
                 .then((result) => {
                   if(result.isConfirmed){
                                       // DELETE FRO DB
-                    axios.delete(`https://car-rent-server-lovat.vercel.app/cars/${id}`)
+                    axios.delete(`http://localhost:3000/cars/${id}`)
                     .then(data=> {
                       console.log("data after delete",data.data);
                       Swal.fire({
@@ -79,7 +79,7 @@ const MyCars = () => {
       updatedCarData.description = updatedCarData.description.split(",").map(req=> req.trim(" "));
         const {Daily_Rent, availability, description,location,
                                                   features, model_no, photo, registration_no} =  updatedCarData || {};
-      axios.patch(`https://car-rent-server-lovat.vercel.app/cars/${id}`, updatedCarData)
+      axios.patch(`http://localhost:3000/cars/${id}`, updatedCarData)
       .then(data=>{
         // console.log("updated data",data.data);
         if(data.data.modifiedCount){  

@@ -12,9 +12,6 @@ import AvailableCars from "../Pages/AvailableCars/AvailableCars";
 import Loading from "../Pages/Loading/Loading";
 import CarDetail from './../Pages/CarDetails/CarDetail';
 
-
-
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -22,23 +19,19 @@ export const router = createBrowserRouter([
     children:[
         {
           index:true,
-          path:"/home",
+          path:"/",
           Component:Home,
         },
-        // {
-        //   path:"/home",
-        //   Component:Home,
-        // },
         {
           path:"/available-cars",
           hydrateFallbackElement:<Loading></Loading>,
-          loader:()=>fetch("https://car-rent-server-lovat.vercel.app/available-cars"),
+          loader:()=>fetch("http://localhost:3000/available-cars"),
           Component:AvailableCars
         },
         {
           path:"/carDetail/:id",
           hydrateFallbackElement:<Loading></Loading>,
-          loader: ({params})=>fetch(`https://car-rent-server-lovat.vercel.app/carDetail/${params.id}`),
+          // loader: ({params})=>fetch(`http://localhost:3000/carDetail/${params.id}`),
           element:<PrivateRoutes><CarDetail></CarDetail></PrivateRoutes>
         },
         {

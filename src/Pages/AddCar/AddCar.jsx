@@ -4,9 +4,11 @@ import Button from '../../UI/Button';
 import { format } from 'date-fns';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
 
 const AddCar = () => {
     const{user}= use(AuthContext);
+    const axiosSecure = useAxiosSecure();
     // console.log(user.accessToken)
     const handleAddCar = (e) =>{
         e.preventDefault();
@@ -22,7 +24,7 @@ const AddCar = () => {
         const {Daily_Rent, User_name, availability, booking_Count, contact_info, description, email, 
                                                             features, model_no, photo, registration_no} =  carData || {};
 
-        axios.post("https://car-rent-server-lovat.vercel.app/cars",carData)
+        axiosSecure.post("http://localhost:3000/cars",carData)
         .then(data=>{
             console.log(data.data);
             if(data.data.insertedId){

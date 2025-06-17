@@ -40,7 +40,7 @@ const SignUp = () => {
             .then(()=>{
                 setUser({...result.user,...profile});
                 toast.success("user is created successfully.");
-                navigate(location.state || "/home")
+                navigate(location.state || "/")
             })
             .catch(error=>{
                 console.log(error.message);
@@ -89,7 +89,7 @@ const SignUp = () => {
                             errorMessage && <p className='text-xs text-red-700'>{errorMessage}</p>
                         }
                         
-                        <button type='submit' to='/home' className="btn btn-success mt-4">Register</button>
+                        <button type='submit' to='/' className="btn btn-success mt-4">Register</button>
                     </fieldset>
                 </form>
                 <p className='text-center'>Already Have an Account? 

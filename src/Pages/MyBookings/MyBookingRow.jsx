@@ -24,7 +24,7 @@ const MyBookingRow = ({ book, index, count,setCount}) => {
   //Booking_Id= carsCollection er _id
   const handleStatusChange = (e, book_id) => {
     console.log(e.target.value, book_id);
-    axios.patch(`https://car-rent-server-lovat.vercel.app/bookings/${book_id}`, {status: e.target.value})
+    axios.patch(`http://localhost:3000/bookings/${book_id}`, {status: e.target.value})
       .then((data) => {
         // console.log(data.data);
         if (data.data.modifiedCount) {
@@ -69,7 +69,7 @@ const MyBookingRow = ({ book, index, count,setCount}) => {
     const start_Date = format(new Date(startDate), "EEEE, MMMM dd, yyyy, kk:mm:ss");
     const end_Date = format(new Date(endDate), "EEEE, MMMM dd, yyyy, kk:mm:ss");
     const editedBookingInfo = {start_Date, end_Date, totalCost}
-    axios.patch(`https://car-rent-server-lovat.vercel.app/bookings/${book_id}`,editedBookingInfo)
+    axios.patch(`http://localhost:3000/bookings/${book_id}`,editedBookingInfo)
     .then(data=>{
         // console.log(data.data);
         if(data.data.modifiedCount){
@@ -91,7 +91,7 @@ const MyBookingRow = ({ book, index, count,setCount}) => {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.patch(`https://car-rent-server-lovat.vercel.app/bookings/${book_id}`, {status: "Cancel"})
+        axios.patch(`http://localhost:3000/bookings/${book_id}`, {status: "Cancel"})
           .then((data) => {
             console.log(data.data);
             if (data.data.modifiedCount) {

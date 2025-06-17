@@ -13,7 +13,7 @@ firebase Link:
 https://car-rent-app-assignment-10.web.app
 
 vercel:
-https://car-rent-server-lovat.vercel.app
+http://localhost:3000
 
 Key Features:
 1) One can easily access the available cars.

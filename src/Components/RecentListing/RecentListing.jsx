@@ -7,7 +7,7 @@ const RecentListing = () => {
     const[recentCars, setRecentCars] = useState([]);
     const[loading, setLoading] = useState(true);
     useEffect(()=>{
-        axios.get("https://car-rent-server-lovat.vercel.app/recent-cars")
+        axios.get("http://localhost:3000/recent-cars")
         .then(res=>{
             // console.log(res.data);
             setRecentCars(res.data);
