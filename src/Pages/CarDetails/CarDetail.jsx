@@ -67,11 +67,12 @@ const CarDetail = () => {
       })
                           //  carsCollection er car_id booking_count o  1 barabo
                           //  carsCollection er _id = Booking_Id
-        
       axios.patch(`http://localhost:3000/available-cars/${Booking_Id}/increment`)
       .then(data=>{
         console.log(data.data);
-        setBookingCount(prev => prev+1);
+        if(data.data.modifiedCount){
+            setBookingCount(prev => prev+1);
+        }
       })
     }
     //  console.log(startDate,endDate)

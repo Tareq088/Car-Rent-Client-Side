@@ -105,16 +105,32 @@ const MyBookingRow = ({ book, index, count,setCount}) => {
   };
   return (
     <>
-      <tr key={book._id} className="hover:bg-amber-100 shadow-2xl p-0">
-        <td className="text-sm">{index + 1}</td>
+      <tr key={book._id} className="hover:bg-amber-100 shadow-2xl p-0 border">
+        <td className="text-sm" >{index + 1}</td>
         <td>
           <img className="h-20 w-35 rounded-xl" src={book?.photo} alt="" />
         </td>
-        <td className="text-sm">{book?.model_no}</td>
-        <td className="text-sm">{book?.bookedTime}</td>
-        <td className="text-xs">{book?.start_Date.split("T")[0]} </td>
-        <td className="text-xs">{book?.end_Date.split("T")[0]} </td>
-        <td className="text-sm">{book?.totalCost} Taka </td>
+        <td className="text-sm ">{book?.model_no}</td>
+        <td className="text-sm "> 
+          {book?.bookedTime.split(" ")[0]} <br />
+          {book?.bookedTime.split(" ")[1]} {" "}
+          {book?.bookedTime.split(" ")[2]} 
+          {book?.bookedTime.split(" ")[3]} <br />
+          {book?.bookedTime.split(" ")[4]}</td>
+        {/* <td className="text-sm border p-0">{book?.bookedTime}</td> */}
+        <td className="text-xs">
+          {book?.start_Date.split(" ")[0]} <br />
+          {book?.start_Date.split(" ")[1]} {" "}
+          {book?.start_Date.split(" ")[2]} 
+          {book?.start_Date.split(" ")[3]} <br />
+          {book?.start_Date.split(" ")[4]} </td>
+        <td className="text-xs ">
+          {book?.start_Date.split(" ")[0]} <br />
+          {book?.end_Date.split(" ")[1]}  {" "}
+          {book?.end_Date.split(" ")[2]}
+          {book?.end_Date.split(" ")[3]} <br />
+          {book?.end_Date.split(" ")[4]}</td>
+        <td className="text-sm">{book?.totalCost} <br /> Taka </td>
         <td className="text-sm">
           <select
             onChange={(e) => handleStatusChange(e, book._id)}
