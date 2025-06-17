@@ -57,7 +57,7 @@ const CarDetail = () => {
       }
       //Booking_Id = carsCollection er _id
                                   // confirmation booking korle data gulo bookingDB te send korbo
-      axios.post("http://localhost:3000/bookings",bookingInfo)
+      axios.post("https://car-rent-server-lovat.vercel.app/bookings",bookingInfo)
       .then(data =>{
         // console.log("after booking",data.data);
         if(data.data.insertedId){
@@ -67,7 +67,7 @@ const CarDetail = () => {
       })
                           //  carsCollection er car_id booking_count o  1 barabo
                           //  carsCollection er _id = Booking_Id
-      axios.patch(`http://localhost:3000/available-cars/${Booking_Id}/increment`)
+      axios.patch(`https://car-rent-server-lovat.vercel.app/available-cars/${Booking_Id}/increment`)
       .then(data=>{
         console.log(data.data);
         if(data.data.modifiedCount){

@@ -13,13 +13,13 @@ const MyBookings = () => {
     const {bookingPromise} = useBookingApi()
     // console.log("user",user);
                     // jehetu cancel, modify button e click korle data auto change hbe tai useEffect() diye korte hbe
-    // const bookingsPromise = fetch(`http://localhost:3000/bookings?email=${user.email}`).then(res=>res.json())
+    // const bookingsPromise = fetch(`https://car-rent-server-lovat.vercel.app/bookings?email=${user.email}`).then(res=>res.json())
     // console.log(bookingsPromise);
     const [bookingsData,setBookingsData] = useState([]);
     const [count, setCount] = useState(0);
  
     useEffect (()=>{
-        // fetch(`http://localhost:3000/bookings?email=${user.email}`,
+        // fetch(`https://car-rent-server-lovat.vercel.app/bookings?email=${user.email}`,
         //             {headers:{authorization: `Bearer ${user.accessToken}`}})
         // .then(res=>res.json())
                                                     // ager

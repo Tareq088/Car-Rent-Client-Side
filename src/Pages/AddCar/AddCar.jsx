@@ -22,7 +22,7 @@ const AddCar = () => {
         const {Daily_Rent, User_name, availability, booking_Count, contact_info, description, email, 
                                                             features, model_no, photo, registration_no} =  carData || {};
 
-        axios.post("http://localhost:3000/cars",carData)
+        axios.post("https://car-rent-server-lovat.vercel.app/cars",carData)
         .then(data=>{
             console.log(data.data);
             if(data.data.insertedId){

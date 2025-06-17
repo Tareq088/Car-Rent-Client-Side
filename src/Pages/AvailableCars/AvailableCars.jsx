@@ -17,14 +17,14 @@ const AvailableCars = () => {
     const params = new URLSearchParams();
     if(searchText || sortOrder) params.append("searchParams", searchText); params.append("sort", sortOrder);
     // console.log(params.toString())
-    fetch(`http://localhost:3000/available-cars?${params.toString()}`)
+    fetch(`https://car-rent-server-lovat.vercel.app/available-cars?${params.toString()}`)
     .then(res=>res.json())
     .then(searchData=>{
       // console.log("searchText",searchData);
       setAvailableCars(searchData);
     })
                     // single searchText
-    // fetch(`http://localhost:3000/available-cars?searchParams=${searchText}`)
+    // fetch(`https://car-rent-server-lovat.vercel.app/available-cars?searchParams=${searchText}`)
     // .then(res=>res.json())
     // .then(searchData=>{
     //   console.log("searchText",searchData);
