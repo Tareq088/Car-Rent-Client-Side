@@ -7,20 +7,24 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import Loading from "../Loading/Loading";
+import useCarApi from "../../Api/useCarApi";
 
 const MyCars = () => {
   const { user} = use(AuthContext);
-  console.log("token", user.accessToken)
+  // console.log("token", user.accessToken)
   const [emailData, setEmailData] = useState([]);
   const[count,setCount] = useState(0);
-  const[sortOrder, setSortOrder] = useState("asc")
+  const[sortOrder, setSortOrder] = useState("asc");
+  const {carPromise} = useCarApi();
   // console.log(user.email);
   // {headers:{authorization:`Bearer ${user.accessToken}}}
   
     useEffect(()=>{
-      fetch(`http://localhost:3000/cars?email=${user.email}&sort=${sortOrder}`,
-        {headers:{authorization:`Bearer ${user.accessToken}`}})
-        .then((res) => res.json())
+      // fetch(`http://localhost:3000/cars?email=${user.email}&sort=${sortOrder}`,
+      //   {headers:{authorization:`Bearer ${user.accessToken}`}})
+      //   .then((res) => res.json())
+            //new
+        carPromise(user?.email, sortOrder)
         .then((data) => {
           // console.log("data", data);
           setEmailData(data);

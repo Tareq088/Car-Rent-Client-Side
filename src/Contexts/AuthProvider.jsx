@@ -30,6 +30,7 @@ const AuthProvider = ({children}) => {
     }
                         // log out user
     const logOutUer = () =>{
+        setLoading(true);
         return signOut(auth);
     }
                         //forget password

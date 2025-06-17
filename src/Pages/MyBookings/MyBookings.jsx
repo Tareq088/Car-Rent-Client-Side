@@ -23,7 +23,7 @@ const MyBookings = () => {
         //             {headers:{authorization: `Bearer ${user.accessToken}`}})
         // .then(res=>res.json())
                                                     // ager
-                                    bookingPromise(user?.email, user?.accessToken)
+                                    // bookingPromise(user?.email, user?.accessToken)
                                     //new
         bookingPromise(user?.email)
         .then(data=>{

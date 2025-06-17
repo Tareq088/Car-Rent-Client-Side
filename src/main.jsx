@@ -10,10 +10,10 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+   <StrictMode>
     <AuthProvider>
       <RouterProvider router={router} />
       <ToastContainer></ToastContainer>
     </AuthProvider>
-  </StrictMode>,
+   </StrictMode>,
 )
