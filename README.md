@@ -1,7 +1,7 @@
 # React + Vite
  name, purpose, live URL, key features, and npm packages used.
 Name: car-rent-client
-Purpose: one can add his/her can in this website so that he/she can earn money and also one can book from this website easily.
+Purpose: one can add his/her can in this website so that Anyone can earn money and also can book from this website easily.
 live URL:
 Netlify Link:
 https://fascinating-kitsune-961014.netlify.app/
@@ -13,7 +13,7 @@ firebase Link:
 https://car-rent-app-assignment-10.web.app
 
 vercel:
-http://localhost:3000
+[http://localhost:3000](https://car-rent-server-lovat.vercel.app)
 
 Key Features:
 1) One can easily access the available cars.
