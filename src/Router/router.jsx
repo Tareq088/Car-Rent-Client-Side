@@ -12,6 +12,8 @@ import AvailableCars from "../Pages/AvailableCars/AvailableCars";
 import Loading from "../Pages/Loading/Loading";
 import CarDetail from './../Pages/CarDetails/CarDetail';
 import Contact from "../Pages/Contact/Contact";
+import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
+import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ export const router = createBrowserRouter([
         {
           path:"/contact",
           Component:Contact,
+        },
+        {
+          path:"/terms-and-conditions",
+          Component:TermsAndConditions,
+        },
+        {
+          path:"/privacy-policy",
+          Component: PrivacyPolicy,
         },
         {
           path:"/carDetail/:id",

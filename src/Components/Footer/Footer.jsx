@@ -17,11 +17,11 @@ const Footer = () => {
             Email: contact@example.com | Phone: +880 111 111 1111</p>
         </div>
         <div className="mt-3">
-            <Link href="/terms-and-conditions" className="text-gray-600 hover:underline mx-2">
+            <Link to="/terms-and-conditions" className="text-gray-600 hover:text-green-500 hover:underline mx-2">
             Terms and Conditions
             </Link>
             |
-            <Link href="/privacy-policy" className="text-gray-600 hover:underline mx-2">
+            <Link to="/privacy-policy" className="text-gray-600 hover:text-green-500 hover:underline mx-2">
             Privacy Policy
             </Link>
         </div>
