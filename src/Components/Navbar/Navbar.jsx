@@ -1,24 +1,36 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import carLogo from "../../assets/car logo.jpg"
 import { AuthContext } from '../../Contexts/AuthContext';
 import Swal from 'sweetalert2';
 import { Tooltip } from 'react-tooltip';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaMoon, FaSun, FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
     const {user, logOutUer} = use(AuthContext);
     const navigate = useNavigate();
+
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+    // Apply theme to HTML element
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme(prev => (prev === "light" ? "dark" : "light"));
+    };
+
     const navList = <>
-                <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
-                <li className='text-lg'><NavLink to='/available-cars' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
-                <li className='text-lg'><NavLink to='/contact' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Contact</NavLink></li>
+                <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-white' : ''}>Home</NavLink></li>
+                <li className='text-lg'><NavLink to='/available-cars' className={({isActive})=> isActive ? 'underline text-white' : ''}>Available Cars</NavLink></li>
+                <li className='text-lg'><NavLink to='/contact' className={({isActive})=> isActive ? 'underline text-white' : ''}>Contact</NavLink></li>
                 {
                     user &&
                     <>
-                        <li className='text-lg'><NavLink to='/add-car' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Add Car</NavLink></li>
-                        <li className='text-lg'><NavLink to='/my-cars' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>My Cars</NavLink></li>
-                        <li className='text-lg'><NavLink to='/my-bookings' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>My Bookings</NavLink></li>
+                        <li className='text-lg'><NavLink to='/add-car' className={({isActive})=> isActive ? 'underline text-white' : ''}>Add Car</NavLink></li>
+                        <li className='text-lg'><NavLink to='/my-cars' className={({isActive})=> isActive ? 'underline text-white' : ''}>My Cars</NavLink></li>
+                        <li className='text-lg'><NavLink to='/my-bookings' className={({isActive})=> isActive ? 'underline text-white' : ''}>My Bookings</NavLink></li>
                     </>
                 }
             </>
@@ -59,6 +71,14 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1">
                         {navList}
                     </ul>
+                    {/* Dark/Light Mode Toggle */}
+                    <button
+                        onClick={toggleTheme}
+                        className="btn btn-sm btn-outline flex items-center gap-2"
+                    >
+                        {theme === "light" ? <FaMoon size={18} /> : <FaSun size={18} />}
+                        {theme === "light" ? "Dark" : "Light"}
+                    </button>
                 </div>
                 <div className="navbar-end h-10">
                     <div className="flex items-center gap-1">
