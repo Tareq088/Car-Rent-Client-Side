@@ -22,7 +22,7 @@ const RecentListing = () => {
     return (
         <div className='bg-base-200'>
             <div className='max-w-11/12 mx-auto p-5'>
-                <h2 className="font-bold text-center text-2xl text-amber-800 mb-5">Recent Listing</h2>
+                <h2 className="font-bold text-center text-2xl  text-red-800 dark:text-amber-400 mb-5">Recent Listing</h2>
                 <div className='grid grid-cols-1 sm:grid-cols-4 gap-10'>
                 {
                     recentCars.map(recentCar => 
