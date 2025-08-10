@@ -12,6 +12,7 @@ const Navbar = () => {
     const navList = <>
                 <li className='text-lg'><NavLink to='/' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Home</NavLink></li>
                 <li className='text-lg'><NavLink to='/available-cars' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Available Cars</NavLink></li>
+                <li className='text-lg'><NavLink to='/contact' className={({isActive})=> isActive ? 'underline text-green-600' : ''}>Contact</NavLink></li>
                 {
                     user &&
                     <>
@@ -32,7 +33,7 @@ const Navbar = () => {
         })
     }
     return (
-    <div className='bg-base-200 sticky z-10 top-0'>
+    <div className='bg-primary sticky z-10 top-0'>
             <div className="navbar justify-center items-center w-full sm:w-11/12 mx-auto pr-4 sm:px-0 py-0">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -74,15 +75,13 @@ const Navbar = () => {
                                 <FaUserCircle  size={35}></FaUserCircle>
                             </div>
                         } 
-                   
-                        
-                            {
-                                user?
-                                <button onClick={handleLogOut} className="btn btn-outline mr-1 text-xs md:text-base p-1 sm:p-2 text-blue-600 hover:text-red-600">Log Out</button>
-                                :
-                                <Link to='/login' className="btn btn-outline mr-1 text-xs md:text-base p-1 sm:p-2 text-blue-600 hover:text-red-600">Log In</Link>
-                            }
-                  
+                        {
+                            user?
+                            <button onClick={handleLogOut} className="btn btn-outline mr-1 text-xs md:text-base p-1 sm:p-2 text-blue-600 hover:text-red-600">Log Out</button>
+                            :
+                            <Link to='/login' className="btn btn-outline mr-1 text-xs md:text-base p-1 sm:p-2 text-blue-600 hover:text-red-600">Log In</Link>
+                        }
+                
                     </div>
                 </div>
             </div>

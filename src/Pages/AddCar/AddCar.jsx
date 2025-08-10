@@ -15,16 +15,18 @@ const AddCar = () => {
         const form = e.target;
         const formData = new FormData(form);
         const  carData = Object.fromEntries(formData.entries());
+                        //booking_Count ke number korte hbe
+        carData.booking_Count = parseInt(carData.booking_Count);
                             //features in array
-         carData.features = carData.features.split(",").map(req=> req.trim(" "));
+        carData.features = carData.features.split(",").map(req=> req.trim(" "));
                             // description in array
-         carData.description = carData.description.split(",").map(req=> req.trim(" "));
-         carData.add_Time= format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss");
+        carData.description = carData.description.split(",").map(req=> req.trim(" "));
+        carData.add_Time= format(new Date(), "EEEE, MMMM dd, yyyy, kk:mm:ss");
         console.log( carData);
         const {Daily_Rent, User_name, availability, booking_Count, contact_info, description, email, 
                                                             features, model_no, photo, registration_no} =  carData || {};
 
-        axiosSecure.post("http://localhost:3000/cars",carData)
+        axiosSecure.post("https://car-rent-server-lovat.vercel.app/cars",carData)
         .then(data=>{
             console.log(data.data);
             if(data.data.insertedId){
